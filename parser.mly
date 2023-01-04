@@ -35,3 +35,10 @@
 %left PLUS MINUS        
 %left TIMES DIV   
 
+%type <prog> prog
+
+
+%start <Ast.prog> prog
+%%
+
+prog: ld = prog {   }
