@@ -1,3 +1,6 @@
+type opComp =
+Eq | Neq | Lt | Le | Gt | Ge
+
 type prog = {
   classes : class_def list;
   objects : object_def list;
@@ -57,3 +60,8 @@ and expression = (*A compléter*)
   | Access of ident*string
   | Unary of expression
 
+  
+
+exception VC_Error of string
+exception RUN_Error of string
+exception MISC_Error of string
