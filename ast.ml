@@ -9,9 +9,12 @@ type prog = {
 and class_def = {
   name : string;
   params : param_def list;
-  block_c : block;
+  attributs : param_def list;
+  methods : method_def list;
   superclass : string option;
+  constructor : block
 }
+
 
 and param_def = {
   name : string;
@@ -41,13 +44,13 @@ and instruction =
     Exp of string (**)
   | Block of block
   | Aff of string*string (**)
-  | Ite of expression*instruction*instruction
+  | Ite of expression*instruction*instruction (*if then else*)
   | Return
 
 and ident = (*ou est la data*)
-    This
-  | Super
-  | Local of string
+    Id of string
+  | This of ident (* this.id *)
+  | Super of ident (* super.id *)
   | Result
 
 and expression = (*A compléter*)

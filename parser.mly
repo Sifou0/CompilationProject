@@ -26,6 +26,7 @@
 %token OVERRIDE
 %token PLUS
 %token IF THEN ELSE BEGIN END
+%token THIS SUPER RESULT
 
 
 /*Les precedences*/
@@ -35,3 +36,10 @@
 %left PLUS MINUS        
 %left TIMES DIV   
 
+%type <expression> expr
+
+expr:
+    x = ID { Ident(Id(x)) }
+|   THIS x = expr { Ident(This(x)) }
+|   SUPER x = expr { Ident(Super(x)) }
+|   
