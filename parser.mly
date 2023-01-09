@@ -43,3 +43,10 @@ expr:
 |   THIS x = expr { Ident(This(x)) }
 |   SUPER x = expr { Ident(Super(x)) }
 |   
+%type <prog> prog
+
+
+%start <Ast.prog> prog
+%%
+
+prog: ld = prog {   }
