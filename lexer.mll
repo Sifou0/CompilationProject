@@ -24,7 +24,10 @@ let _ =
       "new",NEW;
       "object",OBJECT;
       "override",OVERRIDE;
-      "return" , RETURN
+      "return" , RETURN;
+      "super", SUPER;
+      "this", THIS;
+      "result", RESULT
     ]
 }
 

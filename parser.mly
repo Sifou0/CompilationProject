@@ -27,6 +27,7 @@
 %token OVERRIDE
 %token PLUS
 %token IF THEN ELSE BEGIN END
+%token THIS SUPER RESULT
 
 
 /*Les precedences*/
