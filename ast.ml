@@ -40,24 +40,18 @@ and method_def = {
 }
 
 and instruction = 
-    Exp of expression 
+    Exp of expression (**)
   | Block of block
-  | Aff of ident*expression (**)
-  | Ite of expression*instruction*instruction (* if then else*)
+  | Aff of ident*expression
+  | Ite of expression*instruction*instruction
   | Return
 
 and ident = (*ou est la data*)
-<<<<<<< HEAD
-    This of string
+    Id of string 
+  | This of string
   | Super of string
   | Local of string
   | Result
-=======
-    Id of string (* variable locale *)
-  | This of string (* this.id *)
-  | Super of string (* super.id *)
-  | Result (* pseudo-variable *)
->>>>>>> f03b571a2e2fd6cedc44e0bc504f7fad3392dbe1
 
 and expression = (*A compléter*)
     Ident of ident
@@ -71,7 +65,7 @@ and expression = (*A compléter*)
   | Plus of expression*expression 
   | Minus of expression*expression
   | Times of expression*expression
-
+  | Concate of string 
 
 and instructions = instruction list 
 

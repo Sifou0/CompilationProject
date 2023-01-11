@@ -20,6 +20,7 @@ let _ =
       "var", VAR;
       "auto", AUTO;
       "def", DEF;
+      "cast", CAST;
       "extends",EXTENDS;
       "new",NEW;
       "object",OBJECT;
@@ -53,7 +54,24 @@ rule
   | _              { 
                      comment lexbuf
                    }
-and 
+and read_string buf =
+  parse
+  | '"'       { STR (Buffer.contents buf) }
+  | '/'  { Buffer.add_char buf '/'; read_string buf lexbuf }
+  | '\\' { Buffer.add_char buf '\\'; read_string buf lexbuf }
+  | '\'  { STR (Buffer.contents buf)  }
+  | '\\' '&'  { Buffer.add_char buf Buffer.contents buf ; read_string buf lexbuf }
+  | '\\' 'f'  { Buffer.add_char buf '\012'; read_string buf lexbuf }
+  | '\\' 'n'  { Buffer.add_char buf '\n'; read_string buf lexbuf }
+  | '\\' 'r'  { Buffer.add_char buf '\r'; read_string buf lexbuf }
+  | '\\' 't'  { Buffer.add_char buf '\t'; read_string buf lexbuf }
+  | [^ '"' '\\']+
+    { Buffer.add_string buf (Lexing.lexeme lexbuf);
+      read_string buf lexbuf
+    }
+  | _ { raise (RUN_Error ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
+  | eof { raise (RUN_Error ("String is not terminated")) }
+  
 token = parse
     lettre LC * as id
     {
@@ -69,8 +87,10 @@ token = parse
  | '\n'           { next_line lexbuf; token lexbuf}
  | chiffre+ as lxm { CSTE(int_of_string lxm) }
  | "/*"           { comment lexbuf }
+ | '"'            { read_string (Buffer.create 17) lexbuf }
  | '+'            { PLUS }
  | '-'            { MINUS }
+ | '&'            { CONCATE }
  | '*'            { TIMES }
  | '/'            { DIV }
  | '('            { LPAREN }
@@ -78,6 +98,7 @@ token = parse
  | ']'            {RBRACKET}
  | '['            {LBRACKET}
  | '{'            {LCBR}
+ | '.'            {DOT}        
  | '}'            {RCBR}
  | ';'            { SEMICOLON }
  | ':'            { COLON }

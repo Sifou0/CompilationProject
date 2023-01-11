@@ -13,10 +13,15 @@
 %token IS
 %token VAR
 %token AUTO
+%token STR
+%token CONCATE
 %token DEF
 %token EXTENDS
 %token NEW
 %token OBJECT
+%token STRING
+%token DOT
+%token CAST
 %token LPAREN
 %token COLON /*:*/
 %token RPAREN
@@ -63,6 +68,11 @@ prog: ld =list(class) bl = bloc EOF {
                                          
  }
 
+param : n = ID COLON typevar = ID { {
+    name = n;
+    class_type = typevar;
+} } 
+
 classe : CLASS n = name LPAREN lp = list(param)  RPAREN    IS bl = bloc { {
                                                                 name = n;
                                                                 params = lp;
@@ -80,16 +90,28 @@ classe : CLASS n = name LPAREN lp = list(param)  RPAREN    IS bl = bloc { {
                                                             }                                          
 bloc : LCBR lp = list(param)  instrs = instructions  RCBR {
     {
-        declarations = param;
+        declarations = lp;
         instruction = instrs;
     }
 }
 
 ident = 
-     THIS x = ID { This(x) } 
-    |SUPER x = ID { Super(x) }
-    |Local 
+     THIS DOT x = ID { This(x) } 
+    |SUPER DOT x = ID { Super(x) }
+    |Local DOT x = ID { Local(x) }
 
+
+expression = 
+     id = ident { Ident(id) }   
+    | n = CSTE { IntCste(n) }
+    | a =  expression PLUS  b = expression { Plus(a,b) }   
+    | a = expression MINUS b = expression { Minus(a,b) }
+    | a = expression Times b = expression { Times(a,b) }
+    | id = ident DOT n = ID { Access(id , n) }
+    | NEW id = ID LPAREN le = list(expression) RPAREN   { NewInstance(id , le) } 
+    | CAST LPAREN tipe = ID RPAREN expression { Cast(tipe , expression) }
+    | num = int  {IntCste(num)}
+    | str = string { StringCste(str) }
 
 instruction = 
     n = expression { Exp(n) } 
@@ -97,8 +119,3 @@ instruction =
   | n = ID ASSIGN r = ID {Aff(n,r)}
   | IF si=expression THEN alors = instruction ELSE sinon = instruction {Ite(si,alors,sinon)} 
 
-expression = 
-     id = ident { Ident(id) }   
-    |n = int { IntCste(n) }
-    |
-    |
