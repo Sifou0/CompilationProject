@@ -77,6 +77,7 @@ token = parse
  | '{'            {LCBR}
  | '}'            {RCBR}
  | ';'            { SEMICOLON }
+ | ':'            { COLON }
  | ":="           { ASSIGN }
  | "<"		    { RELOP (Ast.Lt) }
  | "<="           { RELOP (Ast.Le) }

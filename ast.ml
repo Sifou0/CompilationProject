@@ -45,8 +45,8 @@ and instruction =
   | Return
 
 and ident = (*ou est la data*)
-    This
-  | Super
+    This of string
+  | Super of string
   | Local of string
   | Result
 
@@ -59,8 +59,13 @@ and expression = (*A compléter*)
   | NewInstance of string*expression list (* new Point(1,2)*)
   | Access of ident*string
   | Unary of expression
+  | Plus of expression*expression 
+  | Minus of expression*expression
+  | Times of expression*expression
 
-  
+
+and instructions = instruction list 
+
 
 exception VC_Error of string
 exception RUN_Error of string
