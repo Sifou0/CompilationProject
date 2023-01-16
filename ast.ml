@@ -3,45 +3,47 @@ Eq | Neq | Lt | Le | Gt | Ge
 
 type prog = {
   classes : class_def list;
-  objects : object_def list;
+  block : block
 }
 
 and class_def = {
   name : string;
-  params : param_def list;
-  attributs : param_def list;
-  methods : method_def list;
-  superclass : string option;
-  constructor : block;
+  is_class : bool ;
+  params : declaration list;
+  (* attributs : declaration list; *)
+  superclass : expression option;
+  constructor : block option;
+  content : block
 }
 
-and param_def = {
+and declaration = {
   name : string;
   class_type : string;
 }
 
-and object_def = {
+(* and object_def = {
   name : string;
   block_o : block;
   content : block;
-}
+} *)
  
 and block = {
-  declarations : param_def list;
+  (* methods : method_def list; *)
+  declarations : declaration list;
   instructions : instruction list;
 }
 
 and method_def = {
   name : string;
-  params : param_def list;
-  return_type : string;
+  params : declaration list;
+  return_type : string option;
   content : block;
   is_override : bool;
 }
 
 and instruction = 
     Exp of expression (**)
-  | Block of block
+  (* | Block of declaration list * instruction list *)
   | Aff of ident*expression
   | Ite of expression*instruction*instruction
   | Return
@@ -65,9 +67,8 @@ and expression = (*A compléter*)
   | Plus of expression*expression 
   | Minus of expression*expression
   | Times of expression*expression
-  | Concate of string 
+  | Concate of expression*expression 
 
-and instructions = instruction list 
 
 
 exception VC_Error of string

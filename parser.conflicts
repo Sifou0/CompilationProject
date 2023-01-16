@@ -1,0 +1,93 @@
+
+** Conflict (shift/reduce) in state 47.
+** Token involved: RPAREN
+** This state is reached from prog after reading:
+
+list(classe) LCBR list(declaration) LPAREN ID LPAREN expression
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+list(classe) block EOF 
+             LCBR list(declaration) list(instruction) RCBR 
+                                    instruction list(instruction) 
+                                    expression 
+                                    (?)
+
+** In state 47, looking ahead at RPAREN, shifting is permitted
+** because of the following sub-derivation:
+
+LPAREN ID expression RPAREN 
+          LPAREN expression . RPAREN 
+
+** In state 47, looking ahead at RPAREN, reducing production
+** list(expression) ->
+** is permitted because of the following sub-derivation:
+
+LPAREN expression RPAREN 
+       ID LPAREN list(expression) RPAREN // lookahead token appears
+                 expression list(expression) // lookahead token is inherited
+                            . 
+
+** Conflict (shift/reduce) in state 29.
+** Token involved: LPAREN
+** This state is reached from prog after reading:
+
+list(classe) LCBR list(declaration) ID
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+list(classe) block EOF 
+             LCBR list(declaration) list(instruction) RCBR 
+                                    (?)
+
+** In state 29, looking ahead at LPAREN, reducing production
+** expression -> ID
+** is permitted because of the following sub-derivation:
+
+instruction list(instruction) // lookahead token appears because list(instruction) can begin with LPAREN
+expression // lookahead token is inherited
+ID . 
+
+** In state 29, looking ahead at LPAREN, shifting is permitted
+** because of the following sub-derivation:
+
+instruction list(instruction) 
+expression 
+ID . LPAREN list(expression) RPAREN 
+
+** Conflict (shift/reduce) in state 28.
+** Tokens involved: UMINUS THIS SUPER NEW LPAREN ID CSTE
+** The following explanations concentrate on token UMINUS.
+** This state is reached from prog after reading:
+
+list(classe) LCBR list(declaration) LPAREN ID LPAREN ID
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+list(classe) block EOF 
+             LCBR list(declaration) list(instruction) RCBR 
+                                    instruction list(instruction) 
+                                    expression 
+                                    (?)
+
+** In state 28, looking ahead at UMINUS, reducing production
+** expression -> ID
+** is permitted because of the following sub-derivation:
+
+LPAREN expression RPAREN 
+       ID LPAREN list(expression) RPAREN 
+                 expression list(expression) // lookahead token appears because list(expression) can begin with UMINUS
+                 ID . 
+
+** In state 28, looking ahead at UMINUS, shifting is permitted
+** because of the following sub-derivation:
+
+LPAREN ID expression RPAREN 
+          LPAREN ID expression RPAREN 
+                    . UMINUS expression 

@@ -60,7 +60,6 @@ and read_string buf =
   | '/'  { Buffer.add_char buf '/'; read_string buf lexbuf }
   | '\\' { Buffer.add_char buf '\\'; read_string buf lexbuf }
   | '\'  { STR (Buffer.contents buf)  }
-  | '\\' '&'  { Buffer.add_char buf Buffer.contents buf ; read_string buf lexbuf }
   | '\\' 'f'  { Buffer.add_char buf '\012'; read_string buf lexbuf }
   | '\\' 'n'  { Buffer.add_char buf '\n'; read_string buf lexbuf }
   | '\\' 'r'  { Buffer.add_char buf '\r'; read_string buf lexbuf }
