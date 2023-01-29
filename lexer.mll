@@ -20,7 +20,7 @@ let _ =
       "var", VAR;
       "auto", AUTO;
       "def", DEF;
-      "cast", CAST;
+      
       "extends",EXTENDS;
       "new",NEW;
       "object",OBJECT;
@@ -34,6 +34,8 @@ let _ =
 
 
 let lettre = ['A'-'Z' 'a'-'z']
+let Maj = ['A'-'Z']
+let Mij = ['a'-'b']
 let chiffre = ['0'-'9']
 let LC = ( chiffre | lettre )
 
@@ -57,9 +59,9 @@ rule
 and read_string buf =
   parse
   | '"'       { STR (Buffer.contents buf) }
-  | '/'  { Buffer.add_char buf '/'; read_string buf lexbuf }
-  | '\\' { Buffer.add_char buf '\\'; read_string buf lexbuf }
-  | '\'  { STR (Buffer.contents buf)  }
+
+   | '\\' '"'  { Buffer.add_char buf '"'; read_string buf lexbuf   }
+  | '\\' '\\'  { STR (Buffer.contents buf)  }
   | '\\' 'f'  { Buffer.add_char buf '\012'; read_string buf lexbuf }
   | '\\' 'n'  { Buffer.add_char buf '\n'; read_string buf lexbuf }
   | '\\' 'r'  { Buffer.add_char buf '\r'; read_string buf lexbuf }
@@ -70,19 +72,20 @@ and read_string buf =
     }
   | _ { raise (RUN_Error ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
   | eof { raise (RUN_Error ("String is not terminated")) }
-  
+  and
 token = parse
-    lettre LC * as id
+ |[' ''\t''\r']+  { 
+
+                       token lexbuf(*consommer les delimiteurs, renvoyer lexbuf suivant*)
+                    } 
+ |Maj LC * as id           { IDCLASS id } 
+ |Mij LC * as id
     {
 
         try 
             Hashtbl.find keyword_table id
         with Not_found -> ID id    
-    }  
- |[' ''\t''\r']+  { 
-
-                       token lexbuf(*consommer les delimiteurs, renvoyer lexbuf suivant*)
-                    } 
+    }              
  | '\n'           { next_line lexbuf; token lexbuf}
  | chiffre+ as lxm { CSTE(int_of_string lxm) }
  | "/*"           { comment lexbuf }

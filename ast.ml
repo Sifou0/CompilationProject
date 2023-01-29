@@ -13,12 +13,14 @@ and class_def = {
   (* attributs : declaration list; *)
   superclass : expression option;
   constructor : block option;
-  content : block
+  content : block_class;
+
 }
 
 and declaration = {
   name : string;
   class_type : string;
+  is_auto : bool ;
 }
 
 (* and object_def = {
@@ -26,11 +28,16 @@ and declaration = {
   block_o : block;
   content : block;
 } *)
- 
+and block_class ={
+  declarations : declaration list;
+  methodes : method_def list;
+
+} 
 and block = {
   (* methods : method_def list; *)
   declarations : declaration list;
   instructions : instruction list;
+
 }
 
 and method_def = {
@@ -67,7 +74,9 @@ and expression = (*A compléter*)
   | Plus of expression*expression 
   | Minus of expression*expression
   | Times of expression*expression
-  | Concate of expression*expression 
+  | Div of expression*expression
+  | Concate of expression*expression
+  | Compo of opComp*expression*expression 
 
 
 

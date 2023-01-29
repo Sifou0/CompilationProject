@@ -5,9 +5,9 @@ State 0:
 prog' -> . prog [ # ]
 ## Transitions:
 -- On CLASS shift to state 1
--- On prog shift to state 93
--- On list(classe) shift to state 94
--- On classe shift to state 97
+-- On prog shift to state 124
+-- On list(classe) shift to state 125
+-- On classe shift to state 128
 ## Reductions:
 -- On LCBR
 --   reduce production list(classe) ->
@@ -16,38 +16,38 @@ State 1:
 ## Known stack suffix:
 ## CLASS
 ## LR(1) items:
-classe -> CLASS . ID LPAREN list(declaration) RPAREN IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS . ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS . ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS . ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+classe -> CLASS . IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS . IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS . IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS . IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On ID shift to state 2
+-- On IDCLASS shift to state 2
 ## Reductions:
 
 State 2:
 ## Known stack suffix:
-## CLASS ID
+## CLASS IDCLASS
 ## LR(1) items:
-classe -> CLASS ID . LPAREN list(declaration) RPAREN IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID . LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID . LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID . LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS . LPAREN list(declaration) RPAREN IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS . LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS . LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS . LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
 -- On LPAREN shift to state 3
 ## Reductions:
 
 State 3:
 ## Known stack suffix:
-## CLASS ID LPAREN
+## CLASS IDCLASS LPAREN
 ## LR(1) items:
-classe -> CLASS ID LPAREN . list(declaration) RPAREN IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN . list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN . list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN . list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN . list(declaration) RPAREN IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN . list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN . list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN . list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
 -- On VAR shift to state 4
--- On list(declaration) shift to state 8
--- On declaration shift to state 67
+-- On list(declaration) shift to state 12
+-- On declaration shift to state 74
 ## Reductions:
 -- On RPAREN
 --   reduce production list(declaration) ->
@@ -56,16 +56,18 @@ State 4:
 ## Known stack suffix:
 ## VAR
 ## LR(1) items:
-declaration -> VAR . ID COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
+declaration -> VAR . ID COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
+declaration -> VAR . AUTO ID COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
 -- On ID shift to state 5
+-- On AUTO shift to state 8
 ## Reductions:
 
 State 5:
 ## Known stack suffix:
 ## VAR ID
 ## LR(1) items:
-declaration -> VAR ID . COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
+declaration -> VAR ID . COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
 -- On COLON shift to state 6
 ## Reductions:
@@ -74,7 +76,7 @@ State 6:
 ## Known stack suffix:
 ## VAR ID COLON
 ## LR(1) items:
-declaration -> VAR ID COLON . ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
+declaration -> VAR ID COLON . ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
 -- On ID shift to state 7
 ## Reductions:
@@ -83,507 +85,576 @@ State 7:
 ## Known stack suffix:
 ## VAR ID COLON ID
 ## LR(1) items:
-declaration -> VAR ID COLON ID . [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
+declaration -> VAR ID COLON ID . [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
 ## Reductions:
--- On VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE
+-- On VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE
 --   reduce production declaration -> VAR ID COLON ID
 
 State 8:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration)
+## VAR AUTO
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) . RPAREN IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) . RPAREN EXTENDS expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) . RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) . RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+declaration -> VAR AUTO . ID COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
--- On RPAREN shift to state 9
+-- On ID shift to state 9
 ## Reductions:
 
 State 9:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN
+## VAR AUTO ID
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN . IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) RPAREN . EXTENDS expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) RPAREN . EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) RPAREN . LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+declaration -> VAR AUTO ID . COLON ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
--- On LPAREN shift to state 10
--- On IS shift to state 75
--- On EXTENDS shift to state 79
+-- On COLON shift to state 10
 ## Reductions:
 
 State 10:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN
+## VAR AUTO ID COLON
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN . RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+declaration -> VAR AUTO ID COLON . ID [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
--- On RPAREN shift to state 11
+-- On ID shift to state 11
 ## Reductions:
 
 State 11:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN
+## VAR AUTO ID COLON ID
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN . LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+declaration -> VAR AUTO ID COLON ID . [ VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
--- On LBRACKET shift to state 12
 ## Reductions:
+-- On VAR UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE
+--   reduce production declaration -> VAR AUTO ID COLON ID
 
 State 12:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET
+## CLASS IDCLASS LPAREN list(declaration)
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET . block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) . RPAREN IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) . RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) . RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) . RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 69
+-- On RPAREN shift to state 13
 ## Reductions:
 
 State 13:
 ## Known stack suffix:
-## LCBR
+## CLASS IDCLASS LPAREN list(declaration) RPAREN
 ## LR(1) items:
-block -> LCBR . list(declaration) list(instruction) RCBR [ RBRACKET EOF ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN . IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN . EXTENDS expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN . EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN . LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On VAR shift to state 4
--- On list(declaration) shift to state 14
--- On declaration shift to state 67
+-- On LPAREN shift to state 14
+-- On IS shift to state 106
+-- On EXTENDS shift to state 110
 ## Reductions:
--- On UMINUS THIS SUPER RCBR NEW LPAREN IF ID CSTE
---   reduce production list(declaration) ->
 
 State 14:
 ## Known stack suffix:
-## LCBR list(declaration)
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN
 ## LR(1) items:
-block -> LCBR list(declaration) . list(instruction) RCBR [ RBRACKET EOF ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN . RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On IF shift to state 53
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(instruction) shift to state 63
--- On instruction shift to state 65
--- On ident shift to state 59
--- On expression shift to state 62
+-- On RPAREN shift to state 15
 ## Reductions:
--- On RCBR
---   reduce production list(instruction) ->
 
 State 15:
 ## Known stack suffix:
-## UMINUS
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN
 ## LR(1) items:
-expression -> UMINUS . expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN . LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 52
+-- On LBRACKET shift to state 16
 ## Reductions:
 
 State 16:
 ## Known stack suffix:
-## THIS
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET
 ## LR(1) items:
-ident -> THIS . DOT ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET . block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On DOT shift to state 17
+-- On LCBR shift to state 17
+-- On block shift to state 76
 ## Reductions:
 
 State 17:
 ## Known stack suffix:
-## THIS DOT
+## LCBR
 ## LR(1) items:
-ident -> THIS DOT . ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+block -> LCBR . list(declaration) list(instruction) RCBR [ RCBR RBRACKET EOF DEF ]
 ## Transitions:
--- On ID shift to state 18
+-- On VAR shift to state 4
+-- On list(declaration) shift to state 18
+-- On declaration shift to state 74
 ## Reductions:
+-- On UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID CSTE
+--   reduce production list(declaration) ->
 
 State 18:
 ## Known stack suffix:
-## THIS DOT ID
+## LCBR list(declaration)
 ## LR(1) items:
-ident -> THIS DOT ID . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+block -> LCBR list(declaration) . list(instruction) RCBR [ RCBR RBRACKET EOF DEF ]
 ## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IF shift to state 59
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On list(instruction) shift to state 70
+-- On instruction shift to state 72
+-- On ident shift to state 65
+-- On expression shift to state 68
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN
---   reduce production ident -> THIS DOT ID
+-- On RCBR
+--   reduce production list(instruction) ->
 
 State 19:
 ## Known stack suffix:
-## SUPER
+## UMINUS
 ## LR(1) items:
-ident -> SUPER . DOT ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+expression -> UMINUS . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On DOT shift to state 20
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 58
 ## Reductions:
 
 State 20:
 ## Known stack suffix:
-## SUPER DOT
+## THIS
 ## LR(1) items:
-ident -> SUPER DOT . ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+ident -> THIS . DOT ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
--- On ID shift to state 21
+-- On DOT shift to state 21
 ## Reductions:
 
 State 21:
 ## Known stack suffix:
-## SUPER DOT ID
+## THIS DOT
 ## LR(1) items:
-ident -> SUPER DOT ID . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN ]
+ident -> THIS DOT . ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
+-- On ID shift to state 22
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE DOT CSTE ASSIGN
---   reduce production ident -> SUPER DOT ID
 
 State 22:
 ## Known stack suffix:
-## NEW
+## THIS DOT ID
 ## LR(1) items:
-expression -> NEW . ID LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+ident -> THIS DOT ID . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
--- On ID shift to state 23
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN
+--   reduce production ident -> THIS DOT ID
 
 State 23:
 ## Known stack suffix:
-## NEW ID
+## SUPER
 ## LR(1) items:
-expression -> NEW ID . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+ident -> SUPER . DOT ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
--- On LPAREN shift to state 24
+-- On DOT shift to state 24
 ## Reductions:
 
 State 24:
 ## Known stack suffix:
-## NEW ID LPAREN
+## SUPER DOT
 ## LR(1) items:
-expression -> NEW ID LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+ident -> SUPER DOT . ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(expression) shift to state 50
--- On ident shift to state 34
--- On expression shift to state 37
+-- On ID shift to state 25
 ## Reductions:
--- On RPAREN
---   reduce production list(expression) ->
 
 State 25:
 ## Known stack suffix:
-## LPAREN
+## SUPER DOT ID
 ## LR(1) items:
-expression -> LPAREN . ID expression RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> LPAREN . expression RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+ident -> SUPER DOT ID . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 26
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 49
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DOT DIV CSTE ASSIGN
+--   reduce production ident -> SUPER DOT ID
 
 State 26:
 ## Known stack suffix:
-## LPAREN ID
+## NEW
 ## LR(1) items:
-expression -> ID . [ TIMES RPAREN PLUS MINUS ]
-expression -> ID . LPAREN list(expression) RPAREN [ TIMES RPAREN PLUS MINUS ]
-expression -> LPAREN ID . expression RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> NEW . IDCLASS LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 27
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 45
+-- On IDCLASS shift to state 27
 ## Reductions:
--- On TIMES RPAREN PLUS MINUS
---   reduce production expression -> ID
 
 State 27:
 ## Known stack suffix:
-## ID LPAREN
+## NEW IDCLASS
 ## LR(1) items:
-expression -> ID LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> LPAREN . ID expression RPAREN [ TIMES RPAREN PLUS MINUS ]
-expression -> LPAREN . expression RPAREN [ TIMES RPAREN PLUS MINUS ]
+expression -> NEW IDCLASS . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 28
--- On CSTE shift to state 31
--- On list(expression) shift to state 32
--- On ident shift to state 34
--- On expression shift to state 47
+-- On LPAREN shift to state 28
 ## Reductions:
--- On RPAREN
---   reduce production list(expression) ->
 
 State 28:
 ## Known stack suffix:
-## LPAREN ID
+## NEW IDCLASS LPAREN
 ## LR(1) items:
-expression -> ID . [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> ID . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> LPAREN ID . expression RPAREN [ TIMES RPAREN PLUS MINUS ]
+expression -> NEW IDCLASS LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 27
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 45
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On list(expression) shift to state 56
+-- On ident shift to state 36
+-- On expression shift to state 39
 ## Reductions:
--- On UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE
---   reduce production expression -> ID
-** Conflict on UMINUS THIS SUPER NEW LPAREN ID CSTE
+-- On RPAREN
+--   reduce production list(expression) ->
 
 State 29:
 ## Known stack suffix:
-## ID
+## LPAREN
 ## LR(1) items:
-expression -> ID . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> ID . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> LPAREN . ID expression RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> LPAREN . expression RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On LPAREN shift to state 30
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 51
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 54
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> ID
-** Conflict on LPAREN
 
 State 30:
 ## Known stack suffix:
-## ID LPAREN
+## IDCLASS
 ## LR(1) items:
-expression -> ID LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> IDCLASS . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(expression) shift to state 32
--- On ident shift to state 34
--- On expression shift to state 37
+-- On LPAREN shift to state 31
 ## Reductions:
--- On RPAREN
---   reduce production list(expression) ->
 
 State 31:
 ## Known stack suffix:
-## CSTE
+## IDCLASS LPAREN
 ## LR(1) items:
-expression -> CSTE . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> IDCLASS LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> CSTE
-
-State 32:
-## Known stack suffix:
-## ID LPAREN list(expression)
-## LR(1) items:
-expression -> ID LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On RPAREN shift to state 33
-## Reductions:
-
-State 33:
-## Known stack suffix:
-## ID LPAREN list(expression) RPAREN
-## LR(1) items:
-expression -> ID LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> ID LPAREN list(expression) RPAREN
-
-State 34:
-## Known stack suffix:
-## ident
-## LR(1) items:
-expression -> ident . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> ident . DOT ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On DOT shift to state 35
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> ident
-
-State 35:
-## Known stack suffix:
-## ident DOT
-## LR(1) items:
-expression -> ident DOT . ID [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On ID shift to state 36
-## Reductions:
-
-State 36:
-## Known stack suffix:
-## ident DOT ID
-## LR(1) items:
-expression -> ident DOT ID . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> ident DOT ID
-
-State 37:
-## Known stack suffix:
-## expression
-## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-list(expression) -> expression . list(expression) [ RPAREN ]
-## Transitions:
--- On UMINUS shift to state 15
--- On TIMES shift to state 38
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On PLUS shift to state 40
--- On NEW shift to state 22
--- On MINUS shift to state 42
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(expression) shift to state 44
--- On ident shift to state 34
--- On expression shift to state 37
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On list(expression) shift to state 34
+-- On ident shift to state 36
+-- On expression shift to state 39
 ## Reductions:
 -- On RPAREN
 --   reduce production list(expression) ->
 
+State 32:
+## Known stack suffix:
+## ID
+## LR(1) items:
+expression -> ID . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> ID
+
+State 33:
+## Known stack suffix:
+## CSTE
+## LR(1) items:
+expression -> CSTE . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> CSTE
+
+State 34:
+## Known stack suffix:
+## IDCLASS LPAREN list(expression)
+## LR(1) items:
+expression -> IDCLASS LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On RPAREN shift to state 35
+## Reductions:
+
+State 35:
+## Known stack suffix:
+## IDCLASS LPAREN list(expression) RPAREN
+## LR(1) items:
+expression -> IDCLASS LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> IDCLASS LPAREN list(expression) RPAREN
+
+State 36:
+## Known stack suffix:
+## ident
+## LR(1) items:
+expression -> ident . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> ident . DOT ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On DOT shift to state 37
+## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> ident
+
+State 37:
+## Known stack suffix:
+## ident DOT
+## LR(1) items:
+expression -> ident DOT . ID [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On ID shift to state 38
+## Reductions:
+
 State 38:
 ## Known stack suffix:
-## expression TIMES
+## ident DOT ID
 ## LR(1) items:
-expression -> expression TIMES . expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> ident DOT ID . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 39
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> ident DOT ID
 
 State 39:
 ## Known stack suffix:
-## expression TIMES expression
+## expression
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression TIMES expression . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RPAREN RELOP PLUS NEW MINUS LPAREN IDCLASS ID DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RPAREN RELOP PLUS NEW MINUS LPAREN IDCLASS ID DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RPAREN RELOP PLUS NEW MINUS LPAREN IDCLASS ID DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS SUPER RPAREN RELOP PLUS NEW MINUS LPAREN IDCLASS ID DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS SUPER RPAREN RELOP PLUS NEW MINUS LPAREN IDCLASS ID DIV CSTE ]
+list(expression) -> expression . list(expression) [ RPAREN ]
 ## Transitions:
+-- On UMINUS shift to state 19
+-- On TIMES shift to state 40
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On NEW shift to state 26
+-- On MINUS shift to state 48
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On DIV shift to state 46
+-- On CSTE shift to state 33
+-- On list(expression) shift to state 50
+-- On ident shift to state 36
+-- On expression shift to state 39
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> expression TIMES expression
+-- On RPAREN
+--   reduce production list(expression) ->
 
 State 40:
 ## Known stack suffix:
-## expression PLUS
+## expression TIMES
 ## LR(1) items:
-expression -> expression PLUS . expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression TIMES . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
 -- On expression shift to state 41
 ## Reductions:
 
 State 41:
 ## Known stack suffix:
-## expression PLUS expression
+## expression TIMES expression
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression PLUS expression . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression TIMES expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On TIMES shift to state 38
+-- On RELOP shift to state 42
 ## Reductions:
--- On UMINUS THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> expression PLUS expression
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> expression TIMES expression
 
 State 42:
 ## Known stack suffix:
-## expression MINUS
+## expression RELOP
 ## LR(1) items:
-expression -> expression MINUS . expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression RELOP . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
 -- On expression shift to state 43
 ## Reductions:
 
 State 43:
 ## Known stack suffix:
-## expression MINUS expression
+## expression RELOP expression
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression MINUS expression . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression RELOP expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On TIMES shift to state 38
 ## Reductions:
--- On UMINUS THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> expression MINUS expression
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> expression RELOP expression
 
 State 44:
+## Known stack suffix:
+## expression PLUS
+## LR(1) items:
+expression -> expression PLUS . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 45
+## Reductions:
+
+State 45:
+## Known stack suffix:
+## expression PLUS expression
+## LR(1) items:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression PLUS expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On TIMES shift to state 40
+-- On RELOP shift to state 42
+-- On DIV shift to state 46
+## Reductions:
+-- On UMINUS THIS THEN SUPER SEMICOLON RPAREN RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE CSTE
+--   reduce production expression -> expression PLUS expression
+
+State 46:
+## Known stack suffix:
+## expression DIV
+## LR(1) items:
+expression -> expression DIV . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 47
+## Reductions:
+
+State 47:
+## Known stack suffix:
+## expression DIV expression
+## LR(1) items:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression DIV expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On RELOP shift to state 42
+## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> expression DIV expression
+
+State 48:
+## Known stack suffix:
+## expression MINUS
+## LR(1) items:
+expression -> expression MINUS . expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 49
+## Reductions:
+
+State 49:
+## Known stack suffix:
+## expression MINUS expression
+## LR(1) items:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression MINUS expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+## Transitions:
+-- On TIMES shift to state 40
+-- On RELOP shift to state 42
+-- On DIV shift to state 46
+## Reductions:
+-- On UMINUS THIS THEN SUPER SEMICOLON RPAREN RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE CSTE
+--   reduce production expression -> expression MINUS expression
+
+State 50:
 ## Known stack suffix:
 ## expression list(expression)
 ## LR(1) items:
@@ -593,311 +664,340 @@ list(expression) -> expression list(expression) . [ RPAREN ]
 -- On RPAREN
 --   reduce production list(expression) -> expression list(expression)
 
-State 45:
-## Known stack suffix:
-## LPAREN ID expression
-## LR(1) items:
-expression -> expression . PLUS expression [ TIMES RPAREN PLUS MINUS ]
-expression -> expression . MINUS expression [ TIMES RPAREN PLUS MINUS ]
-expression -> expression . TIMES expression [ TIMES RPAREN PLUS MINUS ]
-expression -> LPAREN ID expression . RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On TIMES shift to state 38
--- On RPAREN shift to state 46
--- On PLUS shift to state 40
--- On MINUS shift to state 42
-## Reductions:
-
-State 46:
-## Known stack suffix:
-## LPAREN ID expression RPAREN
-## LR(1) items:
-expression -> LPAREN ID expression RPAREN . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> LPAREN ID expression RPAREN
-
-State 47:
-## Known stack suffix:
-## LPAREN expression
-## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RPAREN PLUS NEW MINUS LPAREN ID CSTE ]
-expression -> LPAREN expression . RPAREN [ TIMES RPAREN PLUS MINUS ]
-list(expression) -> expression . list(expression) [ RPAREN ]
-## Transitions:
--- On UMINUS shift to state 15
--- On TIMES shift to state 38
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On RPAREN shift to state 48
--- On PLUS shift to state 40
--- On NEW shift to state 22
--- On MINUS shift to state 42
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(expression) shift to state 44
--- On ident shift to state 34
--- On expression shift to state 37
-## Reductions:
--- On RPAREN
---   reduce production list(expression) ->
-** Conflict on RPAREN
-
-State 48:
-## Known stack suffix:
-## LPAREN expression RPAREN
-## LR(1) items:
-expression -> LPAREN expression RPAREN . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
-## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> LPAREN expression RPAREN
-
-State 49:
-## Known stack suffix:
-## LPAREN expression
-## LR(1) items:
-expression -> expression . PLUS expression [ TIMES RPAREN PLUS MINUS ]
-expression -> expression . MINUS expression [ TIMES RPAREN PLUS MINUS ]
-expression -> expression . TIMES expression [ TIMES RPAREN PLUS MINUS ]
-expression -> LPAREN expression . RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On TIMES shift to state 38
--- On RPAREN shift to state 48
--- On PLUS shift to state 40
--- On MINUS shift to state 42
-## Reductions:
-
-State 50:
-## Known stack suffix:
-## NEW ID LPAREN list(expression)
-## LR(1) items:
-expression -> NEW ID LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-## Transitions:
--- On RPAREN shift to state 51
-## Reductions:
-
 State 51:
 ## Known stack suffix:
-## NEW ID LPAREN list(expression) RPAREN
+## LPAREN ID
 ## LR(1) items:
-expression -> NEW ID LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> ID . [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> LPAREN ID . expression RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 52
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> NEW ID LPAREN list(expression) RPAREN
+-- On TIMES RPAREN RELOP PLUS MINUS DIV
+--   reduce production expression -> ID
 
 State 52:
 ## Known stack suffix:
-## UMINUS expression
+## LPAREN ID expression
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
-expression -> UMINUS expression . [ UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . MINUS expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . TIMES expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . DIV expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> LPAREN ID expression . RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
 ## Transitions:
+-- On TIMES shift to state 40
+-- On RPAREN shift to state 53
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On DIV shift to state 46
 ## Reductions:
--- On UMINUS TIMES THIS THEN SUPER RPAREN RCBR PLUS NEW MINUS LPAREN IS IF ID ELSE CSTE
---   reduce production expression -> UMINUS expression
 
 State 53:
 ## Known stack suffix:
-## IF
+## LPAREN ID expression RPAREN
 ## LR(1) items:
-instruction -> IF . expression THEN instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> LPAREN ID expression RPAREN . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 54
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> LPAREN ID expression RPAREN
 
 State 54:
 ## Known stack suffix:
-## IF expression
+## LPAREN expression
 ## LR(1) items:
-expression -> expression . PLUS expression [ TIMES THEN PLUS MINUS ]
-expression -> expression . MINUS expression [ TIMES THEN PLUS MINUS ]
-expression -> expression . TIMES expression [ TIMES THEN PLUS MINUS ]
-instruction -> IF expression . THEN instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . MINUS expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . TIMES expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> expression . DIV expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
+expression -> LPAREN expression . RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ TIMES RPAREN RELOP PLUS MINUS DIV ]
 ## Transitions:
--- On TIMES shift to state 38
--- On THEN shift to state 55
--- On PLUS shift to state 40
--- On MINUS shift to state 42
+-- On TIMES shift to state 40
+-- On RPAREN shift to state 55
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On DIV shift to state 46
 ## Reductions:
 
 State 55:
 ## Known stack suffix:
-## IF expression THEN
+## LPAREN expression RPAREN
 ## LR(1) items:
-instruction -> IF expression THEN . instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> LPAREN expression RPAREN . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On IF shift to state 53
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On instruction shift to state 56
--- On ident shift to state 59
--- On expression shift to state 62
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> LPAREN expression RPAREN
 
 State 56:
 ## Known stack suffix:
-## IF expression THEN instruction
+## NEW IDCLASS LPAREN list(expression)
 ## LR(1) items:
-instruction -> IF expression THEN instruction . ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> NEW IDCLASS LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On ELSE shift to state 57
+-- On RPAREN shift to state 57
 ## Reductions:
 
 State 57:
 ## Known stack suffix:
-## IF expression THEN instruction ELSE
+## NEW IDCLASS LPAREN list(expression) RPAREN
 ## LR(1) items:
-instruction -> IF expression THEN instruction ELSE . instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> NEW IDCLASS LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On IF shift to state 53
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On instruction shift to state 58
--- On ident shift to state 59
--- On expression shift to state 62
 ## Reductions:
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN
 
 State 58:
 ## Known stack suffix:
-## IF expression THEN instruction ELSE instruction
+## UMINUS expression
 ## LR(1) items:
-instruction -> IF expression THEN instruction ELSE instruction . [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> UMINUS expression . [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RELOP RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE ]
 ## Transitions:
+-- On RELOP shift to state 42
 ## Reductions:
--- On UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE
---   reduce production instruction -> IF expression THEN instruction ELSE instruction
+-- On UMINUS TIMES THIS THEN SUPER SEMICOLON RPAREN RCBR PLUS NEW MINUS LPAREN IS IF IDCLASS ID ELSE DIV CSTE
+--   reduce production expression -> UMINUS expression
 
 State 59:
 ## Known stack suffix:
-## ident
+## IF
 ## LR(1) items:
-expression -> ident . [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-expression -> ident . DOT ID [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-instruction -> ident . ASSIGN expression [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+instruction -> IF . expression THEN instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
--- On DOT shift to state 35
--- On ASSIGN shift to state 60
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 60
 ## Reductions:
--- On UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE
---   reduce production expression -> ident
 
 State 60:
 ## Known stack suffix:
-## ident ASSIGN
+## IF expression
 ## LR(1) items:
-instruction -> ident ASSIGN . expression [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+expression -> expression . PLUS expression [ TIMES THEN RELOP PLUS MINUS DIV ]
+expression -> expression . MINUS expression [ TIMES THEN RELOP PLUS MINUS DIV ]
+expression -> expression . TIMES expression [ TIMES THEN RELOP PLUS MINUS DIV ]
+expression -> expression . DIV expression [ TIMES THEN RELOP PLUS MINUS DIV ]
+expression -> expression . RELOP expression [ TIMES THEN RELOP PLUS MINUS DIV ]
+instruction -> IF expression . THEN instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 61
+-- On TIMES shift to state 40
+-- On THEN shift to state 61
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On DIV shift to state 46
 ## Reductions:
 
 State 61:
 ## Known stack suffix:
-## ident ASSIGN expression
+## IF expression THEN
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-instruction -> ident ASSIGN expression . [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+instruction -> IF expression THEN . instruction ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
--- On TIMES shift to state 38
--- On PLUS shift to state 40
--- On MINUS shift to state 42
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IF shift to state 59
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On instruction shift to state 62
+-- On ident shift to state 65
+-- On expression shift to state 68
 ## Reductions:
--- On UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE
---   reduce production instruction -> ident ASSIGN expression
 
 State 62:
 ## Known stack suffix:
-## expression
+## IF expression THEN instruction
 ## LR(1) items:
-expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RCBR PLUS NEW MINUS LPAREN IF ID ELSE CSTE ]
-instruction -> expression . [ UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE ]
+instruction -> IF expression THEN instruction . ELSE instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
--- On TIMES shift to state 38
--- On PLUS shift to state 40
--- On MINUS shift to state 42
+-- On ELSE shift to state 63
 ## Reductions:
--- On UMINUS THIS SUPER RCBR NEW LPAREN IF ID ELSE CSTE
---   reduce production instruction -> expression
 
 State 63:
 ## Known stack suffix:
-## LCBR list(declaration) list(instruction)
+## IF expression THEN instruction ELSE
 ## LR(1) items:
-block -> LCBR list(declaration) list(instruction) . RCBR [ RBRACKET EOF ]
+instruction -> IF expression THEN instruction ELSE . instruction [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
--- On RCBR shift to state 64
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IF shift to state 59
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On instruction shift to state 64
+-- On ident shift to state 65
+-- On expression shift to state 68
 ## Reductions:
 
 State 64:
 ## Known stack suffix:
-## LCBR list(declaration) list(instruction) RCBR
+## IF expression THEN instruction ELSE instruction
 ## LR(1) items:
-block -> LCBR list(declaration) list(instruction) RCBR . [ RBRACKET EOF ]
+instruction -> IF expression THEN instruction ELSE instruction . [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
 ## Transitions:
 ## Reductions:
--- On RBRACKET EOF
---   reduce production block -> LCBR list(declaration) list(instruction) RCBR
+-- On UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE
+--   reduce production instruction -> IF expression THEN instruction ELSE instruction
 
 State 65:
+## Known stack suffix:
+## ident
+## LR(1) items:
+expression -> ident . [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+expression -> ident . DOT ID [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+instruction -> ident . ASSIGN expression [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+## Transitions:
+-- On DOT shift to state 37
+-- On ASSIGN shift to state 66
+## Reductions:
+-- On TIMES SEMICOLON RELOP PLUS MINUS DIV
+--   reduce production expression -> ident
+
+State 66:
+## Known stack suffix:
+## ident ASSIGN
+## LR(1) items:
+instruction -> ident ASSIGN . expression [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 67
+## Reductions:
+
+State 67:
+## Known stack suffix:
+## ident ASSIGN expression
+## LR(1) items:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS SUPER RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DIV CSTE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS SUPER RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DIV CSTE ]
+instruction -> ident ASSIGN expression . [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+## Transitions:
+-- On TIMES shift to state 40
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On DIV shift to state 46
+## Reductions:
+-- On UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE
+--   reduce production instruction -> ident ASSIGN expression
+
+State 68:
+## Known stack suffix:
+## expression
+## LR(1) items:
+expression -> expression . PLUS expression [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+expression -> expression . MINUS expression [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+expression -> expression . TIMES expression [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+expression -> expression . DIV expression [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+expression -> expression . RELOP expression [ TIMES SEMICOLON RELOP PLUS MINUS DIV ]
+instruction -> expression . SEMICOLON [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+## Transitions:
+-- On TIMES shift to state 40
+-- On SEMICOLON shift to state 69
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On DIV shift to state 46
+## Reductions:
+
+State 69:
+## Known stack suffix:
+## expression SEMICOLON
+## LR(1) items:
+instruction -> expression SEMICOLON . [ UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+## Transitions:
+## Reductions:
+-- On UMINUS THIS SUPER RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE
+--   reduce production instruction -> expression SEMICOLON
+
+State 70:
+## Known stack suffix:
+## LCBR list(declaration) list(instruction)
+## LR(1) items:
+block -> LCBR list(declaration) list(instruction) . RCBR [ RCBR RBRACKET EOF DEF ]
+## Transitions:
+-- On RCBR shift to state 71
+## Reductions:
+
+State 71:
+## Known stack suffix:
+## LCBR list(declaration) list(instruction) RCBR
+## LR(1) items:
+block -> LCBR list(declaration) list(instruction) RCBR . [ RCBR RBRACKET EOF DEF ]
+## Transitions:
+## Reductions:
+-- On RCBR RBRACKET EOF DEF
+--   reduce production block -> LCBR list(declaration) list(instruction) RCBR
+
+State 72:
 ## Known stack suffix:
 ## instruction
 ## LR(1) items:
 list(instruction) -> instruction . list(instruction) [ RCBR ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On IF shift to state 53
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On list(instruction) shift to state 66
--- On instruction shift to state 65
--- On ident shift to state 59
--- On expression shift to state 62
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IF shift to state 59
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On list(instruction) shift to state 73
+-- On instruction shift to state 72
+-- On ident shift to state 65
+-- On expression shift to state 68
 ## Reductions:
 -- On RCBR
 --   reduce production list(instruction) ->
 
-State 66:
+State 73:
 ## Known stack suffix:
 ## instruction list(instruction)
 ## LR(1) items:
@@ -907,272 +1007,538 @@ list(instruction) -> instruction list(instruction) . [ RCBR ]
 -- On RCBR
 --   reduce production list(instruction) -> instruction list(instruction)
 
-State 67:
+State 74:
 ## Known stack suffix:
 ## declaration
 ## LR(1) items:
-list(declaration) -> declaration . list(declaration) [ UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
+list(declaration) -> declaration . list(declaration) [ UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
 -- On VAR shift to state 4
--- On list(declaration) shift to state 68
--- On declaration shift to state 67
+-- On list(declaration) shift to state 75
+-- On declaration shift to state 74
 ## Reductions:
--- On UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE
+-- On UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE
 --   reduce production list(declaration) ->
-
-State 68:
-## Known stack suffix:
-## declaration list(declaration)
-## LR(1) items:
-list(declaration) -> declaration list(declaration) . [ UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE ]
-## Transitions:
-## Reductions:
--- On UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF ID CSTE
---   reduce production list(declaration) -> declaration list(declaration)
-
-State 69:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block . RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-## Transitions:
--- On RBRACKET shift to state 70
-## Reductions:
-
-State 70:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET . IS LBRACKET block RBRACKET [ LCBR CLASS ]
-## Transitions:
--- On IS shift to state 71
-## Reductions:
-
-State 71:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS . LBRACKET block RBRACKET [ LCBR CLASS ]
-## Transitions:
--- On LBRACKET shift to state 72
-## Reductions:
-
-State 72:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET . block RBRACKET [ LCBR CLASS ]
-## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 73
-## Reductions:
-
-State 73:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block . RBRACKET [ LCBR CLASS ]
-## Transitions:
--- On RBRACKET shift to state 74
-## Reductions:
-
-State 74:
-## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET
-## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET . [ LCBR CLASS ]
-## Transitions:
-## Reductions:
--- On LCBR CLASS
---   reduce production classe -> CLASS ID LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block RBRACKET
 
 State 75:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN IS
+## declaration list(declaration)
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN IS . LBRACKET block RBRACKET [ LCBR CLASS ]
+list(declaration) -> declaration list(declaration) . [ UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE ]
 ## Transitions:
--- On LBRACKET shift to state 76
 ## Reductions:
+-- On UMINUS THIS SUPER RPAREN RCBR NEW LPAREN IF IDCLASS ID DEF CSTE
+--   reduce production list(declaration) -> declaration list(declaration)
 
 State 76:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET . block RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block . RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 77
+-- On RBRACKET shift to state 77
 ## Reductions:
 
 State 77:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET block
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET block . RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET . IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On RBRACKET shift to state 78
+-- On IS shift to state 78
 ## Reductions:
 
 State 78:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET block RBRACKET
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET block RBRACKET . [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS . LBRACKET block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
+-- On LBRACKET shift to state 79
 ## Reductions:
--- On LCBR CLASS
---   reduce production classe -> CLASS ID LPAREN list(declaration) RPAREN IS LBRACKET block RBRACKET
 
 State 79:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS . expression IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS . expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET . block_class RBRACKET [ LCBR CLASS ]
 ## Transitions:
--- On UMINUS shift to state 15
--- On THIS shift to state 16
--- On SUPER shift to state 19
--- On NEW shift to state 22
--- On LPAREN shift to state 25
--- On ID shift to state 29
--- On CSTE shift to state 31
--- On ident shift to state 34
--- On expression shift to state 80
+-- On LCBR shift to state 80
+-- On block_class shift to state 104
 ## Reductions:
 
 State 80:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression
+## LCBR
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression . IS LBRACKET block RBRACKET [ LCBR CLASS ]
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression . ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
-expression -> expression . PLUS expression [ TIMES PLUS MINUS IS ID ]
-expression -> expression . MINUS expression [ TIMES PLUS MINUS IS ID ]
-expression -> expression . TIMES expression [ TIMES PLUS MINUS IS ID ]
+block_class -> LCBR . list(declaration) list(methode) RCBR [ RBRACKET ]
 ## Transitions:
--- On TIMES shift to state 38
--- On PLUS shift to state 40
--- On MINUS shift to state 42
--- On IS shift to state 81
--- On ID shift to state 85
+-- On VAR shift to state 4
+-- On list(declaration) shift to state 81
+-- On declaration shift to state 74
 ## Reductions:
+-- On RCBR DEF
+--   reduce production list(declaration) ->
 
 State 81:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS
+## LCBR list(declaration)
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS . LBRACKET block RBRACKET [ LCBR CLASS ]
+block_class -> LCBR list(declaration) . list(methode) RCBR [ RBRACKET ]
 ## Transitions:
--- On LBRACKET shift to state 82
+-- On DEF shift to state 82
+-- On methode shift to state 100
+-- On list(methode) shift to state 102
 ## Reductions:
+-- On RCBR
+--   reduce production list(methode) ->
 
 State 82:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET
+## DEF
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET . block RBRACKET [ LCBR CLASS ]
+methode -> DEF . ID LPAREN list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
+methode -> DEF . ID LPAREN list(declaration) RPAREN block [ RCBR DEF ]
+methode -> DEF . OVERRIDE ID LPAREN list(declaration) RPAREN block [ RCBR DEF ]
+methode -> DEF . OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 83
+-- On OVERRIDE shift to state 83
+-- On ID shift to state 92
 ## Reductions:
 
 State 83:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block
+## DEF OVERRIDE
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block . RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE . ID LPAREN list(declaration) RPAREN block [ RCBR DEF ]
+methode -> DEF OVERRIDE . ID LPAREN list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On RBRACKET shift to state 84
+-- On ID shift to state 84
 ## Reductions:
 
 State 84:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET
+## DEF OVERRIDE ID
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET . [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID . LPAREN list(declaration) RPAREN block [ RCBR DEF ]
+methode -> DEF OVERRIDE ID . LPAREN list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
+-- On LPAREN shift to state 85
 ## Reductions:
--- On LCBR CLASS
---   reduce production classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block RBRACKET
 
 State 85:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID
+## DEF OVERRIDE ID LPAREN
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID . LBRACKET block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN . list(declaration) RPAREN block [ RCBR DEF ]
+methode -> DEF OVERRIDE ID LPAREN . list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On LBRACKET shift to state 86
+-- On VAR shift to state 4
+-- On list(declaration) shift to state 86
+-- On declaration shift to state 74
 ## Reductions:
+-- On RPAREN
+--   reduce production list(declaration) ->
 
 State 86:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET
+## DEF OVERRIDE ID LPAREN list(declaration)
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET . block RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) . RPAREN block [ RCBR DEF ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) . RPAREN COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 87
+-- On RPAREN shift to state 87
 ## Reductions:
 
 State 87:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block
+## DEF OVERRIDE ID LPAREN list(declaration) RPAREN
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block . RBRACKET IS LBRACKET block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN . block [ RCBR DEF ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN . COLON IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On RBRACKET shift to state 88
+-- On LCBR shift to state 17
+-- On COLON shift to state 88
+-- On block shift to state 91
 ## Reductions:
 
 State 88:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET
+## DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET . IS LBRACKET block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON . IDCLASS block [ RCBR DEF ]
 ## Transitions:
--- On IS shift to state 89
+-- On IDCLASS shift to state 89
 ## Reductions:
 
 State 89:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS
+## DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS . LBRACKET block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS . block [ RCBR DEF ]
 ## Transitions:
--- On LBRACKET shift to state 90
+-- On LCBR shift to state 17
+-- On block shift to state 90
 ## Reductions:
 
 State 90:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET
+## DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS block
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET . block RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS block . [ RCBR DEF ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 91
 ## Reductions:
+-- On RCBR DEF
+--   reduce production methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN COLON IDCLASS block
 
 State 91:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block
+## DEF OVERRIDE ID LPAREN list(declaration) RPAREN block
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block . RBRACKET [ LCBR CLASS ]
+methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN block . [ RCBR DEF ]
 ## Transitions:
--- On RBRACKET shift to state 92
 ## Reductions:
+-- On RCBR DEF
+--   reduce production methode -> DEF OVERRIDE ID LPAREN list(declaration) RPAREN block
 
 State 92:
 ## Known stack suffix:
-## CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET
+## DEF ID
 ## LR(1) items:
-classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET . [ LCBR CLASS ]
+methode -> DEF ID . LPAREN list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
+methode -> DEF ID . LPAREN list(declaration) RPAREN block [ RCBR DEF ]
+## Transitions:
+-- On LPAREN shift to state 93
+## Reductions:
+
+State 93:
+## Known stack suffix:
+## DEF ID LPAREN
+## LR(1) items:
+methode -> DEF ID LPAREN . list(declaration) RPAREN COLON IDCLASS block [ RCBR DEF ]
+methode -> DEF ID LPAREN . list(declaration) RPAREN block [ RCBR DEF ]
+## Transitions:
+-- On VAR shift to state 4
+-- On list(declaration) shift to state 94
+-- On declaration shift to state 74
+## Reductions:
+-- On RPAREN
+--   reduce production list(declaration) ->
+
+State 94:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration)
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) . RPAREN COLON IDCLASS block [ RCBR DEF ]
+methode -> DEF ID LPAREN list(declaration) . RPAREN block [ RCBR DEF ]
+## Transitions:
+-- On RPAREN shift to state 95
+## Reductions:
+
+State 95:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration) RPAREN
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) RPAREN . COLON IDCLASS block [ RCBR DEF ]
+methode -> DEF ID LPAREN list(declaration) RPAREN . block [ RCBR DEF ]
+## Transitions:
+-- On LCBR shift to state 17
+-- On COLON shift to state 96
+-- On block shift to state 99
+## Reductions:
+
+State 96:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration) RPAREN COLON
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) RPAREN COLON . IDCLASS block [ RCBR DEF ]
+## Transitions:
+-- On IDCLASS shift to state 97
+## Reductions:
+
+State 97:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration) RPAREN COLON IDCLASS
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) RPAREN COLON IDCLASS . block [ RCBR DEF ]
+## Transitions:
+-- On LCBR shift to state 17
+-- On block shift to state 98
+## Reductions:
+
+State 98:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration) RPAREN COLON IDCLASS block
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) RPAREN COLON IDCLASS block . [ RCBR DEF ]
+## Transitions:
+## Reductions:
+-- On RCBR DEF
+--   reduce production methode -> DEF ID LPAREN list(declaration) RPAREN COLON IDCLASS block
+
+State 99:
+## Known stack suffix:
+## DEF ID LPAREN list(declaration) RPAREN block
+## LR(1) items:
+methode -> DEF ID LPAREN list(declaration) RPAREN block . [ RCBR DEF ]
+## Transitions:
+## Reductions:
+-- On RCBR DEF
+--   reduce production methode -> DEF ID LPAREN list(declaration) RPAREN block
+
+State 100:
+## Known stack suffix:
+## methode
+## LR(1) items:
+list(methode) -> methode . list(methode) [ RCBR ]
+## Transitions:
+-- On DEF shift to state 82
+-- On methode shift to state 100
+-- On list(methode) shift to state 101
+## Reductions:
+-- On RCBR
+--   reduce production list(methode) ->
+
+State 101:
+## Known stack suffix:
+## methode list(methode)
+## LR(1) items:
+list(methode) -> methode list(methode) . [ RCBR ]
+## Transitions:
+## Reductions:
+-- On RCBR
+--   reduce production list(methode) -> methode list(methode)
+
+State 102:
+## Known stack suffix:
+## LCBR list(declaration) list(methode)
+## LR(1) items:
+block_class -> LCBR list(declaration) list(methode) . RCBR [ RBRACKET ]
+## Transitions:
+-- On RCBR shift to state 103
+## Reductions:
+
+State 103:
+## Known stack suffix:
+## LCBR list(declaration) list(methode) RCBR
+## LR(1) items:
+block_class -> LCBR list(declaration) list(methode) RCBR . [ RBRACKET ]
+## Transitions:
+## Reductions:
+-- On RBRACKET
+--   reduce production block_class -> LCBR list(declaration) list(methode) RCBR
+
+State 104:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class . RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On RBRACKET shift to state 105
+## Reductions:
+
+State 105:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET . [ LCBR CLASS ]
 ## Transitions:
 ## Reductions:
 -- On LCBR CLASS
---   reduce production classe -> CLASS ID LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block RBRACKET
+--   reduce production classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN LPAREN RPAREN LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET
 
-State 93:
+State 106:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN IS
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN IS . LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LBRACKET shift to state 107
+## Reductions:
+
+State 107:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET . block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LCBR shift to state 80
+-- On block_class shift to state 108
+## Reductions:
+
+State 108:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class . RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On RBRACKET shift to state 109
+## Reductions:
+
+State 109:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class RBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class RBRACKET . [ LCBR CLASS ]
+## Transitions:
+## Reductions:
+-- On LCBR CLASS
+--   reduce production classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN IS LBRACKET block_class RBRACKET
+
+State 110:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS . expression IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS . expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On UMINUS shift to state 19
+-- On THIS shift to state 20
+-- On SUPER shift to state 23
+-- On NEW shift to state 26
+-- On LPAREN shift to state 29
+-- On IDCLASS shift to state 30
+-- On ID shift to state 32
+-- On CSTE shift to state 33
+-- On ident shift to state 36
+-- On expression shift to state 111
+## Reductions:
+
+State 111:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression . IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression . ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+expression -> expression . PLUS expression [ TIMES RELOP PLUS MINUS IS ID DIV ]
+expression -> expression . MINUS expression [ TIMES RELOP PLUS MINUS IS ID DIV ]
+expression -> expression . TIMES expression [ TIMES RELOP PLUS MINUS IS ID DIV ]
+expression -> expression . DIV expression [ TIMES RELOP PLUS MINUS IS ID DIV ]
+expression -> expression . RELOP expression [ TIMES RELOP PLUS MINUS IS ID DIV ]
+## Transitions:
+-- On TIMES shift to state 40
+-- On RELOP shift to state 42
+-- On PLUS shift to state 44
+-- On MINUS shift to state 48
+-- On IS shift to state 112
+-- On ID shift to state 116
+-- On DIV shift to state 46
+## Reductions:
+
+State 112:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS . LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LBRACKET shift to state 113
+## Reductions:
+
+State 113:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET . block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LCBR shift to state 80
+-- On block_class shift to state 114
+## Reductions:
+
+State 114:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class . RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On RBRACKET shift to state 115
+## Reductions:
+
+State 115:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET . [ LCBR CLASS ]
+## Transitions:
+## Reductions:
+-- On LCBR CLASS
+--   reduce production classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression IS LBRACKET block_class RBRACKET
+
+State 116:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID . LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LBRACKET shift to state 117
+## Reductions:
+
+State 117:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET . block RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LCBR shift to state 17
+-- On block shift to state 118
+## Reductions:
+
+State 118:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block . RBRACKET IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On RBRACKET shift to state 119
+## Reductions:
+
+State 119:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET . IS LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On IS shift to state 120
+## Reductions:
+
+State 120:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS . LBRACKET block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LBRACKET shift to state 121
+## Reductions:
+
+State 121:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET . block_class RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On LCBR shift to state 80
+-- On block_class shift to state 122
+## Reductions:
+
+State 122:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class . RBRACKET [ LCBR CLASS ]
+## Transitions:
+-- On RBRACKET shift to state 123
+## Reductions:
+
+State 123:
+## Known stack suffix:
+## CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET
+## LR(1) items:
+classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET . [ LCBR CLASS ]
+## Transitions:
+## Reductions:
+-- On LCBR CLASS
+--   reduce production classe -> CLASS IDCLASS LPAREN list(declaration) RPAREN EXTENDS expression ID LBRACKET block RBRACKET IS LBRACKET block_class RBRACKET
+
+State 124:
 ## Known stack suffix:
 ## prog
 ## LR(1) items:
@@ -1182,26 +1548,26 @@ prog' -> prog . [ # ]
 -- On #
 --   accept prog
 
-State 94:
+State 125:
 ## Known stack suffix:
 ## list(classe)
 ## LR(1) items:
 prog -> list(classe) . block EOF [ # ]
 ## Transitions:
--- On LCBR shift to state 13
--- On block shift to state 95
+-- On LCBR shift to state 17
+-- On block shift to state 126
 ## Reductions:
 
-State 95:
+State 126:
 ## Known stack suffix:
 ## list(classe) block
 ## LR(1) items:
 prog -> list(classe) block . EOF [ # ]
 ## Transitions:
--- On EOF shift to state 96
+-- On EOF shift to state 127
 ## Reductions:
 
-State 96:
+State 127:
 ## Known stack suffix:
 ## list(classe) block EOF
 ## LR(1) items:
@@ -1211,20 +1577,20 @@ prog -> list(classe) block EOF . [ # ]
 -- On #
 --   reduce production prog -> list(classe) block EOF
 
-State 97:
+State 128:
 ## Known stack suffix:
 ## classe
 ## LR(1) items:
 list(classe) -> classe . list(classe) [ LCBR ]
 ## Transitions:
 -- On CLASS shift to state 1
--- On list(classe) shift to state 98
--- On classe shift to state 97
+-- On list(classe) shift to state 129
+-- On classe shift to state 128
 ## Reductions:
 -- On LCBR
 --   reduce production list(classe) ->
 
-State 98:
+State 129:
 ## Known stack suffix:
 ## classe list(classe)
 ## LR(1) items:

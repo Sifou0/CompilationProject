@@ -3,6 +3,7 @@
 %}
 
 %token <string> ID
+
 %token <int> CSTE
 %token <Ast.opComp> RELOP
 %token PLUS MINUS TIMES DIV
@@ -19,9 +20,9 @@
 %token EXTENDS
 %token NEW
 %token OBJECT
-%token STRING
+
 %token DOT
-%token CAST
+%token <string>  IDCLASS
 %token COLON /*:*/
 %token LBRACKET /*[*/
 %token RBRACKET /*]*/
@@ -29,35 +30,36 @@
 %token RCBR  /*}*/
 %token OVERRIDE
 
-%token IF THEN ELSE BEGIN END
+%token IF THEN ELSE
 %token THIS SUPER RESULT
 
 
-/*Les precedences*/
-%token UMINUS
-%token EOF
-%left PLUS MINUS        
-%left TIMES   
-%right UMINUS 
+
 
 %type <Ast.expression> expression
 %type <Ast.class_def> classe
 %type <Ast.declaration> declaration
 
 %type <Ast.block> block
-//%type <Ast.method_def> methode
+%type <Ast.block_class> block_class
+%type <Ast.method_def> methode
 %type <Ast.ident> ident
 
 %type <Ast.instruction> instruction
+//%type <Ast.method_def>methode
+/*Les precedences*/
 
-
-
-
+%token UMINUS
+%token EOF
+%left PLUS MINUS        
+%left TIMES DIV
+%right UMINUS 
+%left RELOP
 %start <Ast.prog> prog
 
 %%
 
-prog: ld =list(classe) bl = block EOF { 
+prog: ld = list(classe) bl = block EOF { 
     {
              classes = ld ;
              block = bl ;
@@ -66,21 +68,28 @@ prog: ld =list(classe) bl = block EOF {
  }
 
 declaration : VAR n = ID COLON typevar = ID { {
-    name = n;
-    class_type = typevar;
-} } 
+        name = n;
+        class_type = typevar;
+        is_auto = false;
+    } } 
+|   VAR AUTO n = ID COLON typevar = ID { {
+        name = n;
+        class_type = typevar;
+        is_auto = true;
+    } } 
 
-classe : CLASS n = ID LPAREN lp = list(declaration)  RPAREN IS LBRACKET bl = block RBRACKET { {
+classe : CLASS n = IDCLASS LPAREN lp = list(declaration) RPAREN IS LBRACKET bl = block_class RBRACKET { {
                                                                 name = n;
                                                                 params = lp;
                                                                 superclass = None;
                                                                 content = bl;
                                                                 constructor = None;
                                                                 is_class = true;
+                                                           
                                                                             } 
                                                              }
 
-        |CLASS n = ID LPAREN ld = list(declaration)  RPAREN EXTENDS spr_class = expression  IS LBRACKET bl = block RBRACKET { 
+        |CLASS n = IDCLASS LPAREN ld = list(declaration) RPAREN EXTENDS spr_class = expression  IS LBRACKET bl = block_class RBRACKET { 
                                                             {
                                                                 name = n;
                                                                 params = ld;
@@ -88,9 +97,10 @@ classe : CLASS n = ID LPAREN lp = list(declaration)  RPAREN IS LBRACKET bl = blo
                                                                 constructor = None;
                                                                 content = bl;
                                                                 is_class = true;
+                                                             
                                                                             } 
                                                             }                  
-         |CLASS n = ID LPAREN ld = list(declaration)  RPAREN EXTENDS spr_class = expression ID LBRACKET construc = block RBRACKET IS LBRACKET bl = block RBRACKET { 
+         |CLASS n = IDCLASS LPAREN ld = list(declaration)  RPAREN EXTENDS spr_class = expression ID LBRACKET construc = block RBRACKET IS LBRACKET bl = block_class RBRACKET { 
                                                             {
                                                                 name = n;
                                                                 params = ld;
@@ -98,25 +108,77 @@ classe : CLASS n = ID LPAREN lp = list(declaration)  RPAREN IS LBRACKET bl = blo
                                                                 constructor = Some(construc);
                                                                 content = bl;
                                                                 is_class = true;
+                                                              
                                                             } 
                                                         }   
 
-           |CLASS n = ID LPAREN lp = list(declaration)   RPAREN LPAREN RPAREN LBRACKET construc = block RBRACKET  IS LBRACKET bl = block RBRACKET { {
+           |CLASS n = IDCLASS LPAREN lp = list(declaration)  RPAREN LPAREN RPAREN LBRACKET construc = block RBRACKET  IS LBRACKET bl = block_class RBRACKET { {
                                                                 name = n;
                                                                 params = lp;
                                                                 constructor = Some(construc);
                                                                 content = bl;
                                                                 is_class = true;
                                                                 superclass = None;
+                                                                 
                                                                 } 
                                                              }                                                                                           
 
-block : LCBR ld = list(declaration)  instrs = list(instruction)   RCBR {
+block : LCBR ld = list(declaration)  instrs = list(instruction)    RCBR {
     {
         declarations = ld;
         instructions = instrs;
+
     }
 }
+
+block_class : LCBR ld = list(declaration) lm = list(methode) RCBR {
+   {  declarations = ld ;
+    methodes = lm ;
+    }
+}
+
+methode : DEF n = ID LPAREN lp = list(declaration) RPAREN COLON cls = IDCLASS  bl = block
+            {
+                {
+                    name = n;
+                    params = lp;
+                    return_type = Some(cls);
+                    content = bl ;
+                    is_override = false;
+                }
+
+            }
+        |   DEF n = ID LPAREN lp = list(declaration) RPAREN bl = block 
+            {
+                {
+                    name = n;
+                    params = lp;
+                    return_type = None ;
+                    content = bl;
+                    is_override = false ;
+                }
+            }
+        | DEF OVERRIDE n = ID LPAREN lp = list(declaration) RPAREN bl = block 
+            {
+                {
+                    name = n;
+                    params = lp;
+                    return_type = None;
+                    content = bl;
+                    is_override = true;
+                }
+            }
+        | DEF OVERRIDE n = ID LPAREN lp = list(declaration) RPAREN COLON cls = IDCLASS  bl = block 
+            {
+                {
+                    name = n;
+                    params = lp;
+                    return_type = Some(cls) ;
+                    content = bl;
+                    is_override = true;
+                }
+            }
+        
 
 ident : 
      THIS DOT x = ID { This(x) } 
@@ -130,16 +192,18 @@ expression :
     | a =  expression PLUS  b = expression { Plus(a,b) }   
     | a = expression MINUS b = expression { Minus(a,b) }
     | a = expression TIMES b = expression { Times(a,b) }
+    | a = expression DIV b = expression {Div(a,b)}
     | UMINUS e = expression { Unary(e) }
     | id = ident DOT n = ID { Access(id , n) }
-    | NEW id = ID LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
-    | id = ID LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
+    | NEW id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
+    | id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
     | LPAREN tipe = ID e = expression RPAREN { Cast(tipe , e) }
     | LPAREN e =  expression RPAREN  { e }
+    | a = expression op = RELOP b = expression {Compo(op,a,b)}
     
 
 instruction :
-    n = expression { Exp(n) } 
+    n = expression SEMICOLON { Exp(n) } 
  // | ld = list(declaration)  li=list(instruction)  { Block(ld,li) }
   | n = ident ASSIGN r = expression {Aff(n,r)}
   | IF si=expression THEN alors = instruction ELSE sinon = instruction {Ite(si,alors,sinon)} 
