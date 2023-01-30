@@ -106,48 +106,31 @@ block_class : LCBR ld = list(declaration) lm = list(methode) RCBR {
     }
 }
 
-methode : DEF n = ID LPAREN lp = list(declaration) RPAREN COLON cls = IDCLASS  bl = block
-            {
-                {
-                    name = n;
-                    params = lp;
-                    return_type = Some(cls);
-                    content = bl ;
-                    is_override = false;
-                }
-
-            }
-        |   DEF n = ID LPAREN lp = list(declaration) RPAREN bl = block 
-            {
-                {
-                    name = n;
-                    params = lp;
-                    return_type = None ;
-                    content = bl;
-                    is_override = false ;
-                }
-            }
-        | DEF OVERRIDE n = ID LPAREN lp = list(declaration) RPAREN bl = block 
-            {
-                {
-                    name = n;
-                    params = lp;
-                    return_type = None;
-                    content = bl;
-                    is_override = true;
-                }
-            }
-        | DEF OVERRIDE n = ID LPAREN lp = list(declaration) RPAREN COLON cls = IDCLASS  bl = block 
-            {
-                {
-                    name = n;
-                    params = lp;
-                    return_type = Some(cls) ;
-                    content = bl;
-                    is_override = true;
-                }
-            }
         
+methode : 
+    DEF o = boption(OVERRIDE) n = ID LPAREN lp =list(declaration) RPAREN  r = option(returned_type) IS b = block
+    {
+        {
+            is_override = o;
+            name = n;
+            params = lp;
+            return_type = r;
+            content = b;
+        }
+    }
+    | DEF o = boption(OVERRIDE) n = ID LPAREN lp =list(declaration) RPAREN  r = returned_type ASSIGN b = block
+    {
+        {
+            is_override = o;
+            name = n;
+            params = lp;
+            return_type = Some r;
+            content = b;
+        }
+    }
+
+
+returned_type : COLON c = IDCLASS { c } 
 
 ident : 
      THIS DOT x = ID { This(x) } 
