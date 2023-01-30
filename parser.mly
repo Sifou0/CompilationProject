@@ -36,7 +36,7 @@
 
 
 
-%type <Ast.expression> expression
+%type <Ast.expression> expression envoiMsg target
 %type <Ast.class_def> classe
 %type <Ast.declaration> declaration
 
@@ -193,6 +193,7 @@ expression :
     | a = expression MINUS b = expression { Minus(a,b) }
     | a = expression TIMES b = expression { Times(a,b) }
     | a = expression DIV b = expression {Div(a,b)}
+    | a = expression CONCATE b = expression { Concate(a,b) }
     | UMINUS e = expression { Unary(e) }
     | id = ident DOT n = ID { Access(id , n) }
     | NEW id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
@@ -200,7 +201,19 @@ expression :
     | LPAREN tipe = ID e = expression RPAREN { Cast(tipe , e) }
     | LPAREN e =  expression RPAREN  { e }
     | a = expression op = RELOP b = expression {Compo(op,a,b)}
-    
+    | a = envoiMsg  { a }
+
+
+   envoiMsg : 
+
+            | s = STR {StringCste s}
+            | t = target { t }
+
+    target :
+             x = ID              { Id x }
+            |o = envoiMsg DOT s = ID  { CallElement(e, Id s) }
+            |o = CLASSID DOT c = ID   { CallElement(o , Id c) }
+            |LPAREN e = expr RPAREN { e }
 
 instruction :
     n = expression SEMICOLON { Exp(n) } 
