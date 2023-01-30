@@ -8,10 +8,11 @@ type prog = {
 
 and class_def = {
   name : string;
-  is_class : bool ;
+  is_class : bool;
+  is_object : bool;
   params : declaration list;
   (* attributs : declaration list; *)
-  superclass : expression option;
+  superclass : string option;
   constructor : block option;
   content : block_class;
 
@@ -77,7 +78,7 @@ and expression = (*A compléter*)
   | Div of expression*expression
   | Concate of expression*expression
   | Compo of opComp*expression*expression 
-  | CallElement of expType*expType
+  | CallElement of expression*expression
 
 
 

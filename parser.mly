@@ -36,7 +36,7 @@
 
 
 
-%type <Ast.expression> expression envoiMsg target
+%type <Ast.expression> expression //envoiMsg target
 %type <Ast.class_def> classe
 %type <Ast.declaration> declaration
 
@@ -65,63 +65,32 @@ prog: ld = list(classe) bl = block EOF {
              block = bl ;
     } 
                                          
- }
+}
 
-declaration : VAR n = ID COLON typevar = ID { {
-        name = n;
-        class_type = typevar;
-        is_auto = false;
-    } } 
-|   VAR AUTO n = ID COLON typevar = ID { {
-        name = n;
-        class_type = typevar;
-        is_auto = true;
-    } } 
+declaration :
+    VAR a = boption(AUTO) n = ID COLON typevar = ID {
+        {
+            name = n;
+            class_type = typevar;
+            is_auto = a;
+        }
+    }                                                                                           
 
-classe : CLASS n = IDCLASS LPAREN lp = list(declaration) RPAREN IS LBRACKET bl = block_class RBRACKET { {
-                                                                name = n;
-                                                                params = lp;
-                                                                superclass = None;
-                                                                content = bl;
-                                                                constructor = None;
-                                                                is_class = true;
-                                                           
-                                                                            } 
-                                                             }
+classe : 
+    c = boption(CLASS) o = boption(OBJECT) n = IDCLASS LPAREN lp = list(declaration) s = option(extends) b = option(block) IS LBRACKET bb = block_class
+    {
+        {
+            name = n;
+            is_class = c;
+            is_object = o;
+            params = lp;
+            superclass = s;
+            constructor = b;
+            content = bb;
+        }
+    }
 
-        |CLASS n = IDCLASS LPAREN ld = list(declaration) RPAREN EXTENDS spr_class = expression  IS LBRACKET bl = block_class RBRACKET { 
-                                                            {
-                                                                name = n;
-                                                                params = ld;
-                                                                superclass = Some(spr_class);
-                                                                constructor = None;
-                                                                content = bl;
-                                                                is_class = true;
-                                                             
-                                                                            } 
-                                                            }                  
-         |CLASS n = IDCLASS LPAREN ld = list(declaration)  RPAREN EXTENDS spr_class = expression ID LBRACKET construc = block RBRACKET IS LBRACKET bl = block_class RBRACKET { 
-                                                            {
-                                                                name = n;
-                                                                params = ld;
-                                                                superclass = Some(spr_class);
-                                                                constructor = Some(construc);
-                                                                content = bl;
-                                                                is_class = true;
-                                                              
-                                                            } 
-                                                        }   
-
-           |CLASS n = IDCLASS LPAREN lp = list(declaration)  RPAREN LPAREN RPAREN LBRACKET construc = block RBRACKET  IS LBRACKET bl = block_class RBRACKET { {
-                                                                name = n;
-                                                                params = lp;
-                                                                constructor = Some(construc);
-                                                                content = bl;
-                                                                is_class = true;
-                                                                superclass = None;
-                                                                 
-                                                                } 
-                                                             }                                                                                           
+extends : EXTENDS c = IDCLASS { c }
 
 block : LCBR ld = list(declaration)  instrs = list(instruction)    RCBR {
     {
@@ -201,19 +170,18 @@ expression :
     | LPAREN tipe = ID e = expression RPAREN { Cast(tipe , e) }
     | LPAREN e =  expression RPAREN  { e }
     | a = expression op = RELOP b = expression {Compo(op,a,b)}
-    | a = envoiMsg  { a }
+  //  | a = envoiMsg  { a }
 
 
-   envoiMsg : 
+//    envoiMsg : 
+//             | s = STR {StringCste s}
+//             | t = target { t }
 
-            | s = STR {StringCste s}
-            | t = target { t }
-
-    target :
-             x = ID              { Id x }
-            |o = envoiMsg DOT s = ID  { CallElement(e, Id s) }
-            |o = CLASSID DOT c = ID   { CallElement(o , Id c) }
-            |LPAREN e = expr RPAREN { e }
+//     target :
+//              x = ID              { Id x }
+//             |o = envoiMsg DOT s = ID  { CallElement(e, Id s) }
+//           //  |o = IDCLASS DOT c = ID   { CallElement(o , Id c) }
+//             |LPAREN e = expression RPAREN { e }
 
 instruction :
     n = expression SEMICOLON { Exp(n) } 
