@@ -69,7 +69,7 @@ and expression = (*A compléter*)
   | Exp of expression
   | Cast of string*expression (* (Integer) x *)
   | NewInstance of string*expression list (* new Point(1,2)*)
-  | Access of ident*string (* x.id *)
+  | Access of expression*ident (* x.id *)
   | Unary of expression
   | Plus of expression*expression 
   | Minus of expression*expression
@@ -78,7 +78,7 @@ and expression = (*A compléter*)
   | Concate of expression*expression
   | Compo of opComp*expression*expression 
   | CallElement of expression*expression
-
+  | EnvoiMsg of expression*ident*expression list
 
 
 exception VC_Error of string

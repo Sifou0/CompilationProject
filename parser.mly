@@ -128,18 +128,21 @@ methode :
         }
     }
 
+
+
 appelMethode:
-    n = ident 
+    n = ident LPAREN le = list(expression) RPAREN
 
-returned_type : COLON c = IDCLASS { c } 
+returned_type:
+    COLON c = IDCLASS { c } 
 
-ident :
+ident:
     | n = ID { Local n }
     | THIS { This } 
     | SUPER { Super }
 
 
-expression :    
+expression:    
      n = CSTE { IntCste n }
     | s = ID { StringCste s }
     | id = ident { Ident(id) }
@@ -149,13 +152,13 @@ expression :
     | a = expression DIV b = expression {Div(a,b)}
     | a = expression CONCATE b = expression { Concate(a,b) }
     | UMINUS e = expression { Unary(e) }
-    | id = ident DOT n = ID { Access(id , n) }
     | NEW id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
     | id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
     | LPAREN tipe = ID e = expression RPAREN { Cast(tipe , e) }
     | LPAREN e =  expression RPAREN  { e }
     | a = expression op = RELOP b = expression {Compo(op,a,b)}
-    | a = envoiMsg  { a }
+    | a = expression DOT i = ident { Access(a,i) }
+    | a = expression DOT n = ident LPAREN le = list(expression) RPAREN { EnvoiMsg(a,n,le) }
 
 
 // envoiMsg : 
