@@ -59,13 +59,13 @@
 
 %%
 
-prog: ld = list(classe) bl = block EOF { 
-    {
-             classes = ld ;
-             block = bl ;
-    } 
-                                         
-}
+prog: 
+    ld = list(classe) bl = block EOF { 
+        {
+                classes = ld ;
+                block = bl ;
+        }                                      
+    }
 
 declaration :
     VAR a = boption(AUTO) n = ID COLON typevar = ID {
@@ -96,7 +96,6 @@ block : LCBR ld = list(declaration)  instrs = list(instruction)    RCBR {
     {
         declarations = ld;
         instructions = instrs;
-
     }
 }
 
@@ -129,12 +128,15 @@ methode :
         }
     }
 
+appelMethode:
+    n = ident 
 
 returned_type : COLON c = IDCLASS { c } 
 
-ident : 
-     THIS DOT x = ID { This(x) } 
-    |SUPER DOT x = ID { Super(x) }
+ident :
+    | n = ID { Local n }
+    | THIS { This } 
+    | SUPER { Super }
 
 
 expression :    
@@ -153,18 +155,19 @@ expression :
     | LPAREN tipe = ID e = expression RPAREN { Cast(tipe , e) }
     | LPAREN e =  expression RPAREN  { e }
     | a = expression op = RELOP b = expression {Compo(op,a,b)}
-  //  | a = envoiMsg  { a }
+    | a = envoiMsg  { a }
 
 
-//    envoiMsg : 
-//             | s = STR {StringCste s}
-//             | t = target { t }
+// envoiMsg : 
+//     | s = STR {StringCste s}
+//     | t = target { t }
+//     | 
 
-//     target :
-//              x = ID              { Id x }
-//             |o = envoiMsg DOT s = ID  { CallElement(e, Id s) }
-//           //  |o = IDCLASS DOT c = ID   { CallElement(o , Id c) }
-//             |LPAREN e = expression RPAREN { e }
+// target :
+//     x = ID              { Id x }
+//     |o = envoiMsg DOT s = ID  { CallElement(e, Id s) }
+//     |o = IDCLASS DOT c = ID   { CallElement(o , Id c) }
+//     |LPAREN e = expression RPAREN { e }
 
 instruction :
     n = expression SEMICOLON { Exp(n) } 

@@ -57,9 +57,8 @@ and instruction =
   | Return
 
 and ident = (*ou est la data*)
-    Id of string 
-  | This of string
-  | Super of string
+  | This
+  | Super
   | Local of string
   | Result
 
