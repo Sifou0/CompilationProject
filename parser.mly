@@ -14,7 +14,7 @@
 %token IS
 %token VAR
 %token AUTO
-%token STR
+%token <string> STR
 %token CONCATE
 %token DEF
 %token EXTENDS
@@ -24,8 +24,6 @@
 %token DOT
 %token <string>  IDCLASS
 %token COLON /*:*/
-%token LBRACKET /*[*/
-%token RBRACKET /*]*/
 %token LCBR  /*{*/
 %token RCBR  /*}*/
 %token OVERRIDE
@@ -49,12 +47,17 @@
 //%type <Ast.method_def>methode
 /*Les precedences*/
 
+
 %token UMINUS
 %token EOF
+
 %left PLUS MINUS        
 %left TIMES DIV
-%right UMINUS 
 %left RELOP
+%left DOT
+%right LPAREN
+%left CONCATE
+%right UMINUS 
 %start <Ast.prog> prog
 
 %%
@@ -77,7 +80,7 @@ declaration :
     }                                                                                           
 
 classe : 
-    c = boption(CLASS) o = boption(OBJECT) n = IDCLASS LPAREN lp = list(declaration) s = option(extends) b = option(block) IS LBRACKET bb = block_class
+    c = boption(CLASS) o = boption(OBJECT) n = IDCLASS LPAREN lp = list(declaration) s = option(extends) b = option(block) IS bb = block_class
     {
         {
             name = n;
@@ -128,11 +131,6 @@ methode :
         }
     }
 
-
-
-appelMethode:
-    n = ident LPAREN le = list(expression) RPAREN
-
 returned_type:
     COLON c = IDCLASS { c } 
 
@@ -140,16 +138,18 @@ ident:
     | n = ID { Local n }
     | THIS { This } 
     | SUPER { Super }
+    | RESULT { Result }
+
 
 
 expression:    
      n = CSTE { IntCste n }
-    | s = ID { StringCste s }
+    | s = STR { StringCste s }
     | id = ident { Ident(id) }
-    | a =  expression PLUS  b = expression { Plus(a,b) }   
-    | a = expression MINUS b = expression { Minus(a,b) }
-    | a = expression TIMES b = expression { Times(a,b) }
-    | a = expression DIV b = expression {Div(a,b)}
+    | a =  expression PLUS  b = expression %prec PLUS { Plus(a,b) }   
+    | a = expression MINUS b = expression %prec MINUS { Minus(a,b) }
+    | a = expression TIMES b = expression %prec TIMES { Times(a,b) }
+    | a = expression DIV b = expression %prec DIV {Div(a,b)}
     | a = expression CONCATE b = expression { Concate(a,b) }
     | UMINUS e = expression { Unary(e) }
     | NEW id = IDCLASS LPAREN le = list(expression) RPAREN   { NewInstance(id , le) }
@@ -176,5 +176,6 @@ instruction :
     n = expression SEMICOLON { Exp(n) } 
  // | ld = list(declaration)  li=list(instruction)  { Block(ld,li) }
   | n = ident ASSIGN r = expression {Aff(n,r)}
-  | IF si=expression THEN alors = instruction ELSE sinon = instruction {Ite(si,alors,sinon)} 
+  | IF si=expression THEN alors = instruction ELSE sinon = instruction {Ite(si,alors,sinon)}
+  | RETURN { Return }
 

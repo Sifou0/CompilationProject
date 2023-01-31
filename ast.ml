@@ -66,7 +66,6 @@ and expression = (*A compléter*)
     Ident of ident
   | IntCste of int
   | StringCste of string
-  | Exp of expression
   | Cast of string*expression (* (Integer) x *)
   | NewInstance of string*expression list (* new Point(1,2)*)
   | Access of expression*ident (* x.id *)
