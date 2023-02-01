@@ -7,7 +7,7 @@ type prog = {
 }
 
 and class_def = {
-  name : string;
+  name_class : string;
   is_class : bool;
   is_object : bool;
   params : declaration list;
@@ -42,12 +42,32 @@ and block = {
 }
 
 and method_def = {
-  name : string;
+  name_meth : string;
   params : declaration list;
   return_type : string option;
   content : block;
   is_override : bool;
 }
+
+
+and attribute_call = {
+  beginning : select_begin;
+  selections_to_attrs : select_end list
+}
+
+and method_call = {
+  beginning_call : select_begin;
+  selections_to_meths : select_end list;
+}
+(* selection_beg_t *)
+and select_begin =
+  | ExpSelect of expression
+  | ClassSelect of string
+
+  (* selection_end_t  *)
+and select_end =
+  | AttrSelect of string
+  | MethSelect of string * expression list
 
 and instruction = 
     Exp of expression (**)

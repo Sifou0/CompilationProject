@@ -83,7 +83,7 @@ classe :
     c = boption(CLASS) o = boption(OBJECT) n = IDCLASS LPAREN lp = list(declaration) s = option(extends) b = option(block) IS bb = block_class
     {
         {
-            name = n;
+            name_class = n;
             is_class = c;
             is_object = o;
             params = lp;
@@ -114,7 +114,7 @@ methode :
     {
         {
             is_override = o;
-            name = n;
+            name_meth = n;
             params = lp;
             return_type = r;
             content = b;
@@ -124,7 +124,7 @@ methode :
     {
         {
             is_override = o;
-            name = n;
+            name_meth = n;
             params = lp;
             return_type = Some r;
             content = b;
