@@ -21,7 +21,7 @@ let isFirstLetterUpper str =
 let rec verifExistOfClass str l =
   match l with
   | [] -> false
-  | x::s -> if (String.equal x.className str) then true else (verifExistOfClass str s)
+  | x::s -> if (String.equal x.name_class str) then true else (verifExistOfClass str s)
 ;;
 
 (* Permet de vérifier que la super classe existe *)
