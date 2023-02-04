@@ -15,8 +15,8 @@ let parse_with_error lexbuf file_in chan =
   try
     (* lance l'analyse syntaxique (qui appellera l'analyse lexicale) en
      * executant au fur et à mesure les actions associées aux productions.
-     * L'appel est fait par TpParse.prog (où prog est le non-terminal déclaré
-     * comme axiome dans tpParse.mly). 
+     * L'appel est fait par parser.prog (où prog est le non-terminal déclaré
+     * comme axiome dans parser.mly). 
      * La valeur retournée par la production qui définit l'axiome renvoie un
      * couple forme par la représentation de la partie déclarations ainsi que
      * la représentation de l'expression comprise entre le begin et le end.
@@ -24,7 +24,9 @@ let parse_with_error lexbuf file_in chan =
      * Ci-dessous ld contient donc une liste de paires dont chacunz représente
      * une déclaration et l'ast de l'expression comprise entre begin et end
      *)
-    let ld, e = TpParse.prog TpLex.token lexbuf in
+     let prog = Parser.prog Lexer.token lexbuf
+      in 
+      (* AnanlyseContext.analyseProgram prog;  *)
 
     (* Dans ce TP d'initiation on réalise à la fois l'impression des AST,
      * les vérifications contextuelles, une version sous forme d'interprète
@@ -58,7 +60,7 @@ let parse_with_error lexbuf file_in chan =
     Compil.compile ld e chan;
     
   with (* traite exception général ... *)
-    TpParse.Error -> (* levée par l'analyseur syntaxique *)
+    parser->(* levée par l'analyseur syntaxique *)
     Printf.fprintf stderr "Syntax error at position %a\n" print_position lexbuf;
     exit (-1)
   | VC_Error msg ->

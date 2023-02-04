@@ -13,8 +13,6 @@ let _ =
     [ "if", IF;
       "then", THEN;
       "else", ELSE;
-      "begin", BEGIN;
-      "end", END;
       "class", CLASS;
       "is", IS;
       "var", VAR;
@@ -97,8 +95,6 @@ token = parse
  | '/'            { DIV }
  | '('            { LPAREN }
  | ')'            { RPAREN } 
- | ']'            {RBRACKET}
- | '['            {LBRACKET}
  | '{'            {LCBR}
  | '.'            {DOT}        
  | '}'            {RCBR}

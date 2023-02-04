@@ -73,17 +73,18 @@ print_string " { ";
 List.iter printDecl bl_cl.declarations;
 List.iter printInstruction bl_cl.instructions;
 print_string " } ";
-
+;;
 let rec printObjet ob =
   print_string "object ";
   print_string obj.name_class ;
   print_String " ";
   printOption printBlock ob.constructor;
   printBlockClass ob.content;
-
+;;
 let rec printClass cl =
- if cl.is_class = true 
+ if cl.is_class
   then
+    begin
    print_string "Class ";
    print_string cl.name_class;
   print_string " ( ";
@@ -95,6 +96,7 @@ let rec printClass cl =
   );
   printOption printBlock cl.constructor ;
   printBlockClass cl.content;
+    end
 else
   printObjet cl
 ;;

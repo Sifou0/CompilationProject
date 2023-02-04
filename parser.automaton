@@ -1,0 +1,1512 @@
+State 0:
+prog' -> . prog [ # ]
+-- On CLASS shift to state 1
+-- On prog shift to state 2
+-- On list(classe) shift to state 3
+-- On classe shift to state 75
+-- On boption(CLASS) shift to state 77
+-- On OBJECT reduce production boption(CLASS) -> 
+-- On LCBR reduce production list(classe) -> 
+-- On IDCLASS reduce production boption(CLASS) -> 
+
+State 1:
+boption(CLASS) -> CLASS . [ OBJECT IDCLASS ]
+-- On OBJECT reduce production boption(CLASS) -> CLASS 
+-- On IDCLASS reduce production boption(CLASS) -> CLASS 
+
+State 2:
+prog' -> prog . [ # ]
+-- On # accept prog
+
+State 3:
+prog -> list(classe) . block EOF [ # ]
+-- On LCBR shift to state 4
+-- On block shift to state 73
+
+State 4:
+block -> LCBR . list(declaration) list(instruction) RCBR [ RCBR IS EOF DEF ]
+-- On VAR shift to state 5
+-- On list(declaration) shift to state 11
+-- On declaration shift to state 71
+-- On UMINUS reduce production list(declaration) -> 
+-- On THIS reduce production list(declaration) -> 
+-- On SUPER reduce production list(declaration) -> 
+-- On STR reduce production list(declaration) -> 
+-- On RETURN reduce production list(declaration) -> 
+-- On RESULT reduce production list(declaration) -> 
+-- On RCBR reduce production list(declaration) -> 
+-- On NEW reduce production list(declaration) -> 
+-- On LPAREN reduce production list(declaration) -> 
+-- On IF reduce production list(declaration) -> 
+-- On IDCLASS reduce production list(declaration) -> 
+-- On ID reduce production list(declaration) -> 
+-- On CSTE reduce production list(declaration) -> 
+
+State 5:
+declaration -> VAR . boption(AUTO) ID COLON ID [ VAR UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On AUTO shift to state 6
+-- On boption(AUTO) shift to state 7
+-- On ID reduce production boption(AUTO) -> 
+
+State 6:
+boption(AUTO) -> AUTO . [ ID ]
+-- On ID reduce production boption(AUTO) -> AUTO 
+
+State 7:
+declaration -> VAR boption(AUTO) . ID COLON ID [ VAR UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On ID shift to state 8
+
+State 8:
+declaration -> VAR boption(AUTO) ID . COLON ID [ VAR UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On COLON shift to state 9
+
+State 9:
+declaration -> VAR boption(AUTO) ID COLON . ID [ VAR UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On ID shift to state 10
+
+State 10:
+declaration -> VAR boption(AUTO) ID COLON ID . [ VAR UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On VAR reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On UMINUS reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On THIS reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On SUPER reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On STR reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On RPAREN reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On RETURN reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On RESULT reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On RCBR reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On NEW reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On LPAREN reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On LCBR reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On IS reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On IF reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On IDCLASS reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On ID reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On EXTENDS reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On DEF reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+-- On CSTE reduce production declaration -> VAR boption(AUTO) ID COLON ID 
+
+State 11:
+block -> LCBR list(declaration) . list(instruction) RCBR [ RCBR IS EOF DEF ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RETURN shift to state 55
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IF shift to state 56
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On list(instruction) shift to state 67
+-- On instruction shift to state 69
+-- On ident shift to state 62
+-- On expression shift to state 65
+-- On RCBR reduce production list(instruction) -> 
+
+State 12:
+expression -> UMINUS . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 54
+
+State 13:
+ident -> THIS . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ASSIGN ]
+-- On UMINUS reduce production ident -> THIS 
+-- On TIMES reduce production ident -> THIS 
+-- On THIS reduce production ident -> THIS 
+-- On THEN reduce production ident -> THIS 
+-- On SUPER reduce production ident -> THIS 
+-- On STR reduce production ident -> THIS 
+-- On SEMICOLON reduce production ident -> THIS 
+-- On RPAREN reduce production ident -> THIS 
+-- On RETURN reduce production ident -> THIS 
+-- On RESULT reduce production ident -> THIS 
+-- On RELOP reduce production ident -> THIS 
+-- On RCBR reduce production ident -> THIS 
+-- On PLUS reduce production ident -> THIS 
+-- On NEW reduce production ident -> THIS 
+-- On MINUS reduce production ident -> THIS 
+-- On LPAREN reduce production ident -> THIS 
+-- On IF reduce production ident -> THIS 
+-- On IDCLASS reduce production ident -> THIS 
+-- On ID reduce production ident -> THIS 
+-- On ELSE reduce production ident -> THIS 
+-- On DOT reduce production ident -> THIS 
+-- On DIV reduce production ident -> THIS 
+-- On CSTE reduce production ident -> THIS 
+-- On CONCATE reduce production ident -> THIS 
+-- On ASSIGN reduce production ident -> THIS 
+
+State 14:
+ident -> SUPER . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ASSIGN ]
+-- On UMINUS reduce production ident -> SUPER 
+-- On TIMES reduce production ident -> SUPER 
+-- On THIS reduce production ident -> SUPER 
+-- On THEN reduce production ident -> SUPER 
+-- On SUPER reduce production ident -> SUPER 
+-- On STR reduce production ident -> SUPER 
+-- On SEMICOLON reduce production ident -> SUPER 
+-- On RPAREN reduce production ident -> SUPER 
+-- On RETURN reduce production ident -> SUPER 
+-- On RESULT reduce production ident -> SUPER 
+-- On RELOP reduce production ident -> SUPER 
+-- On RCBR reduce production ident -> SUPER 
+-- On PLUS reduce production ident -> SUPER 
+-- On NEW reduce production ident -> SUPER 
+-- On MINUS reduce production ident -> SUPER 
+-- On LPAREN reduce production ident -> SUPER 
+-- On IF reduce production ident -> SUPER 
+-- On IDCLASS reduce production ident -> SUPER 
+-- On ID reduce production ident -> SUPER 
+-- On ELSE reduce production ident -> SUPER 
+-- On DOT reduce production ident -> SUPER 
+-- On DIV reduce production ident -> SUPER 
+-- On CSTE reduce production ident -> SUPER 
+-- On CONCATE reduce production ident -> SUPER 
+-- On ASSIGN reduce production ident -> SUPER 
+
+State 15:
+expression -> STR . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> STR 
+-- On TIMES reduce production expression -> STR 
+-- On THIS reduce production expression -> STR 
+-- On THEN reduce production expression -> STR 
+-- On SUPER reduce production expression -> STR 
+-- On STR reduce production expression -> STR 
+-- On SEMICOLON reduce production expression -> STR 
+-- On RPAREN reduce production expression -> STR 
+-- On RETURN reduce production expression -> STR 
+-- On RESULT reduce production expression -> STR 
+-- On RELOP reduce production expression -> STR 
+-- On RCBR reduce production expression -> STR 
+-- On PLUS reduce production expression -> STR 
+-- On NEW reduce production expression -> STR 
+-- On MINUS reduce production expression -> STR 
+-- On LPAREN reduce production expression -> STR 
+-- On IF reduce production expression -> STR 
+-- On IDCLASS reduce production expression -> STR 
+-- On ID reduce production expression -> STR 
+-- On ELSE reduce production expression -> STR 
+-- On DOT reduce production expression -> STR 
+-- On DIV reduce production expression -> STR 
+-- On CSTE reduce production expression -> STR 
+-- On CONCATE reduce production expression -> STR 
+
+State 16:
+ident -> RESULT . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ASSIGN ]
+-- On UMINUS reduce production ident -> RESULT 
+-- On TIMES reduce production ident -> RESULT 
+-- On THIS reduce production ident -> RESULT 
+-- On THEN reduce production ident -> RESULT 
+-- On SUPER reduce production ident -> RESULT 
+-- On STR reduce production ident -> RESULT 
+-- On SEMICOLON reduce production ident -> RESULT 
+-- On RPAREN reduce production ident -> RESULT 
+-- On RETURN reduce production ident -> RESULT 
+-- On RESULT reduce production ident -> RESULT 
+-- On RELOP reduce production ident -> RESULT 
+-- On RCBR reduce production ident -> RESULT 
+-- On PLUS reduce production ident -> RESULT 
+-- On NEW reduce production ident -> RESULT 
+-- On MINUS reduce production ident -> RESULT 
+-- On LPAREN reduce production ident -> RESULT 
+-- On IF reduce production ident -> RESULT 
+-- On IDCLASS reduce production ident -> RESULT 
+-- On ID reduce production ident -> RESULT 
+-- On ELSE reduce production ident -> RESULT 
+-- On DOT reduce production ident -> RESULT 
+-- On DIV reduce production ident -> RESULT 
+-- On CSTE reduce production ident -> RESULT 
+-- On CONCATE reduce production ident -> RESULT 
+-- On ASSIGN reduce production ident -> RESULT 
+
+State 17:
+expression -> NEW . IDCLASS LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On IDCLASS shift to state 18
+
+State 18:
+expression -> NEW IDCLASS . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On LPAREN shift to state 19
+
+State 19:
+expression -> NEW IDCLASS LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On list(expression) shift to state 52
+-- On ident shift to state 27
+-- On expression shift to state 28
+-- On RPAREN reduce production list(expression) -> 
+
+State 20:
+expression -> LPAREN . ID expression RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> LPAREN . expression RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 47
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 50
+
+State 21:
+expression -> IDCLASS . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On LPAREN shift to state 22
+
+State 22:
+expression -> IDCLASS LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On list(expression) shift to state 25
+-- On ident shift to state 27
+-- On expression shift to state 28
+-- On RPAREN reduce production list(expression) -> 
+
+State 23:
+ident -> ID . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ASSIGN ]
+-- On UMINUS reduce production ident -> ID 
+-- On TIMES reduce production ident -> ID 
+-- On THIS reduce production ident -> ID 
+-- On THEN reduce production ident -> ID 
+-- On SUPER reduce production ident -> ID 
+-- On STR reduce production ident -> ID 
+-- On SEMICOLON reduce production ident -> ID 
+-- On RPAREN reduce production ident -> ID 
+-- On RETURN reduce production ident -> ID 
+-- On RESULT reduce production ident -> ID 
+-- On RELOP reduce production ident -> ID 
+-- On RCBR reduce production ident -> ID 
+-- On PLUS reduce production ident -> ID 
+-- On NEW reduce production ident -> ID 
+-- On MINUS reduce production ident -> ID 
+-- On LPAREN reduce production ident -> ID 
+-- On IF reduce production ident -> ID 
+-- On IDCLASS reduce production ident -> ID 
+-- On ID reduce production ident -> ID 
+-- On ELSE reduce production ident -> ID 
+-- On DOT reduce production ident -> ID 
+-- On DIV reduce production ident -> ID 
+-- On CSTE reduce production ident -> ID 
+-- On CONCATE reduce production ident -> ID 
+-- On ASSIGN reduce production ident -> ID 
+
+State 24:
+expression -> CSTE . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> CSTE 
+-- On TIMES reduce production expression -> CSTE 
+-- On THIS reduce production expression -> CSTE 
+-- On THEN reduce production expression -> CSTE 
+-- On SUPER reduce production expression -> CSTE 
+-- On STR reduce production expression -> CSTE 
+-- On SEMICOLON reduce production expression -> CSTE 
+-- On RPAREN reduce production expression -> CSTE 
+-- On RETURN reduce production expression -> CSTE 
+-- On RESULT reduce production expression -> CSTE 
+-- On RELOP reduce production expression -> CSTE 
+-- On RCBR reduce production expression -> CSTE 
+-- On PLUS reduce production expression -> CSTE 
+-- On NEW reduce production expression -> CSTE 
+-- On MINUS reduce production expression -> CSTE 
+-- On LPAREN reduce production expression -> CSTE 
+-- On IF reduce production expression -> CSTE 
+-- On IDCLASS reduce production expression -> CSTE 
+-- On ID reduce production expression -> CSTE 
+-- On ELSE reduce production expression -> CSTE 
+-- On DOT reduce production expression -> CSTE 
+-- On DIV reduce production expression -> CSTE 
+-- On CSTE reduce production expression -> CSTE 
+-- On CONCATE reduce production expression -> CSTE 
+
+State 25:
+expression -> IDCLASS LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On RPAREN shift to state 26
+
+State 26:
+expression -> IDCLASS LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On TIMES reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On THIS reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On THEN reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On SUPER reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On STR reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On SEMICOLON reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On RPAREN reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On RETURN reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On RESULT reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On RELOP reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On RCBR reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On PLUS reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On NEW reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On MINUS reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On LPAREN reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On IF reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On IDCLASS reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On ID reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On ELSE reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On DOT reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On DIV reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On CSTE reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+-- On CONCATE reduce production expression -> IDCLASS LPAREN list(expression) RPAREN 
+
+State 27:
+expression -> ident . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> ident 
+-- On TIMES reduce production expression -> ident 
+-- On THIS reduce production expression -> ident 
+-- On THEN reduce production expression -> ident 
+-- On SUPER reduce production expression -> ident 
+-- On STR reduce production expression -> ident 
+-- On SEMICOLON reduce production expression -> ident 
+-- On RPAREN reduce production expression -> ident 
+-- On RETURN reduce production expression -> ident 
+-- On RESULT reduce production expression -> ident 
+-- On RELOP reduce production expression -> ident 
+-- On RCBR reduce production expression -> ident 
+-- On PLUS reduce production expression -> ident 
+-- On NEW reduce production expression -> ident 
+-- On MINUS reduce production expression -> ident 
+-- On LPAREN reduce production expression -> ident 
+-- On IF reduce production expression -> ident 
+-- On IDCLASS reduce production expression -> ident 
+-- On ID reduce production expression -> ident 
+-- On ELSE reduce production expression -> ident 
+-- On DOT reduce production expression -> ident 
+-- On DIV reduce production expression -> ident 
+-- On CSTE reduce production expression -> ident 
+-- On CONCATE reduce production expression -> ident 
+
+State 28:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS SUPER STR RPAREN RESULT RELOP PLUS NEW MINUS LPAREN IDCLASS ID DOT DIV CSTE CONCATE ]
+list(expression) -> expression . list(expression) [ RPAREN ]
+-- On UMINUS shift to state 12
+-- On TIMES shift to state 29
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On NEW shift to state 17
+-- On MINUS shift to state 44
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CSTE shift to state 24
+-- On CONCATE shift to state 38
+-- On list(expression) shift to state 46
+-- On ident shift to state 27
+-- On expression shift to state 28
+-- On RPAREN reduce production list(expression) -> 
+
+State 29:
+expression -> expression TIMES . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 30
+
+State 30:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression TIMES expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On RELOP shift to state 31
+-- On DOT shift to state 33
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production expression -> expression TIMES expression 
+-- On TIMES reduce production expression -> expression TIMES expression 
+-- On THIS reduce production expression -> expression TIMES expression 
+-- On THEN reduce production expression -> expression TIMES expression 
+-- On SUPER reduce production expression -> expression TIMES expression 
+-- On STR reduce production expression -> expression TIMES expression 
+-- On SEMICOLON reduce production expression -> expression TIMES expression 
+-- On RPAREN reduce production expression -> expression TIMES expression 
+-- On RETURN reduce production expression -> expression TIMES expression 
+-- On RESULT reduce production expression -> expression TIMES expression 
+-- On RCBR reduce production expression -> expression TIMES expression 
+-- On PLUS reduce production expression -> expression TIMES expression 
+-- On NEW reduce production expression -> expression TIMES expression 
+-- On MINUS reduce production expression -> expression TIMES expression 
+-- On LPAREN reduce production expression -> expression TIMES expression 
+-- On IF reduce production expression -> expression TIMES expression 
+-- On IDCLASS reduce production expression -> expression TIMES expression 
+-- On ID reduce production expression -> expression TIMES expression 
+-- On ELSE reduce production expression -> expression TIMES expression 
+-- On DIV reduce production expression -> expression TIMES expression 
+-- On CSTE reduce production expression -> expression TIMES expression 
+
+State 31:
+expression -> expression RELOP . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 32
+
+State 32:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression RELOP expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On DOT shift to state 33
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production expression -> expression RELOP expression 
+-- On TIMES reduce production expression -> expression RELOP expression 
+-- On THIS reduce production expression -> expression RELOP expression 
+-- On THEN reduce production expression -> expression RELOP expression 
+-- On SUPER reduce production expression -> expression RELOP expression 
+-- On STR reduce production expression -> expression RELOP expression 
+-- On SEMICOLON reduce production expression -> expression RELOP expression 
+-- On RPAREN reduce production expression -> expression RELOP expression 
+-- On RETURN reduce production expression -> expression RELOP expression 
+-- On RESULT reduce production expression -> expression RELOP expression 
+-- On RELOP reduce production expression -> expression RELOP expression 
+-- On RCBR reduce production expression -> expression RELOP expression 
+-- On PLUS reduce production expression -> expression RELOP expression 
+-- On NEW reduce production expression -> expression RELOP expression 
+-- On MINUS reduce production expression -> expression RELOP expression 
+-- On LPAREN reduce production expression -> expression RELOP expression 
+-- On IF reduce production expression -> expression RELOP expression 
+-- On IDCLASS reduce production expression -> expression RELOP expression 
+-- On ID reduce production expression -> expression RELOP expression 
+-- On ELSE reduce production expression -> expression RELOP expression 
+-- On DIV reduce production expression -> expression RELOP expression 
+-- On CSTE reduce production expression -> expression RELOP expression 
+
+State 33:
+expression -> expression DOT . ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression DOT . ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On RESULT shift to state 16
+-- On ID shift to state 23
+-- On ident shift to state 34
+
+State 34:
+expression -> expression DOT ident . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression DOT ident . LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On LPAREN shift to state 35
+-- On UMINUS reduce production expression -> expression DOT ident 
+-- On TIMES reduce production expression -> expression DOT ident 
+-- On THIS reduce production expression -> expression DOT ident 
+-- On THEN reduce production expression -> expression DOT ident 
+-- On SUPER reduce production expression -> expression DOT ident 
+-- On STR reduce production expression -> expression DOT ident 
+-- On SEMICOLON reduce production expression -> expression DOT ident 
+-- On RPAREN reduce production expression -> expression DOT ident 
+-- On RETURN reduce production expression -> expression DOT ident 
+-- On RESULT reduce production expression -> expression DOT ident 
+-- On RELOP reduce production expression -> expression DOT ident 
+-- On RCBR reduce production expression -> expression DOT ident 
+-- On PLUS reduce production expression -> expression DOT ident 
+-- On NEW reduce production expression -> expression DOT ident 
+-- On MINUS reduce production expression -> expression DOT ident 
+-- On IF reduce production expression -> expression DOT ident 
+-- On IDCLASS reduce production expression -> expression DOT ident 
+-- On ID reduce production expression -> expression DOT ident 
+-- On ELSE reduce production expression -> expression DOT ident 
+-- On DOT reduce production expression -> expression DOT ident 
+-- On DIV reduce production expression -> expression DOT ident 
+-- On CSTE reduce production expression -> expression DOT ident 
+-- On CONCATE reduce production expression -> expression DOT ident 
+
+State 35:
+expression -> expression DOT ident LPAREN . list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On list(expression) shift to state 36
+-- On ident shift to state 27
+-- On expression shift to state 28
+-- On RPAREN reduce production list(expression) -> 
+
+State 36:
+expression -> expression DOT ident LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On RPAREN shift to state 37
+
+State 37:
+expression -> expression DOT ident LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On TIMES reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On THIS reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On THEN reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On SUPER reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On STR reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On SEMICOLON reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On RPAREN reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On RETURN reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On RESULT reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On RELOP reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On RCBR reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On PLUS reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On NEW reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On MINUS reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On LPAREN reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On IF reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On IDCLASS reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On ID reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On ELSE reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On DOT reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On DIV reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On CSTE reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+-- On CONCATE reduce production expression -> expression DOT ident LPAREN list(expression) RPAREN 
+
+State 38:
+expression -> expression CONCATE . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 39
+
+State 39:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression CONCATE expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> expression CONCATE expression 
+-- On TIMES reduce production expression -> expression CONCATE expression 
+-- On THIS reduce production expression -> expression CONCATE expression 
+-- On THEN reduce production expression -> expression CONCATE expression 
+-- On SUPER reduce production expression -> expression CONCATE expression 
+-- On STR reduce production expression -> expression CONCATE expression 
+-- On SEMICOLON reduce production expression -> expression CONCATE expression 
+-- On RPAREN reduce production expression -> expression CONCATE expression 
+-- On RETURN reduce production expression -> expression CONCATE expression 
+-- On RESULT reduce production expression -> expression CONCATE expression 
+-- On RELOP reduce production expression -> expression CONCATE expression 
+-- On RCBR reduce production expression -> expression CONCATE expression 
+-- On PLUS reduce production expression -> expression CONCATE expression 
+-- On NEW reduce production expression -> expression CONCATE expression 
+-- On MINUS reduce production expression -> expression CONCATE expression 
+-- On LPAREN reduce production expression -> expression CONCATE expression 
+-- On IF reduce production expression -> expression CONCATE expression 
+-- On IDCLASS reduce production expression -> expression CONCATE expression 
+-- On ID reduce production expression -> expression CONCATE expression 
+-- On ELSE reduce production expression -> expression CONCATE expression 
+-- On DOT reduce production expression -> expression CONCATE expression 
+-- On DIV reduce production expression -> expression CONCATE expression 
+-- On CSTE reduce production expression -> expression CONCATE expression 
+-- On CONCATE reduce production expression -> expression CONCATE expression 
+
+State 40:
+expression -> expression PLUS . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 41
+
+State 41:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression PLUS expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On TIMES shift to state 29
+-- On RELOP shift to state 31
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production expression -> expression PLUS expression 
+-- On THIS reduce production expression -> expression PLUS expression 
+-- On THEN reduce production expression -> expression PLUS expression 
+-- On SUPER reduce production expression -> expression PLUS expression 
+-- On STR reduce production expression -> expression PLUS expression 
+-- On SEMICOLON reduce production expression -> expression PLUS expression 
+-- On RPAREN reduce production expression -> expression PLUS expression 
+-- On RETURN reduce production expression -> expression PLUS expression 
+-- On RESULT reduce production expression -> expression PLUS expression 
+-- On RCBR reduce production expression -> expression PLUS expression 
+-- On PLUS reduce production expression -> expression PLUS expression 
+-- On NEW reduce production expression -> expression PLUS expression 
+-- On MINUS reduce production expression -> expression PLUS expression 
+-- On LPAREN reduce production expression -> expression PLUS expression 
+-- On IF reduce production expression -> expression PLUS expression 
+-- On IDCLASS reduce production expression -> expression PLUS expression 
+-- On ID reduce production expression -> expression PLUS expression 
+-- On ELSE reduce production expression -> expression PLUS expression 
+-- On CSTE reduce production expression -> expression PLUS expression 
+
+State 42:
+expression -> expression DIV . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 43
+
+State 43:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression DIV expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On RELOP shift to state 31
+-- On DOT shift to state 33
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production expression -> expression DIV expression 
+-- On TIMES reduce production expression -> expression DIV expression 
+-- On THIS reduce production expression -> expression DIV expression 
+-- On THEN reduce production expression -> expression DIV expression 
+-- On SUPER reduce production expression -> expression DIV expression 
+-- On STR reduce production expression -> expression DIV expression 
+-- On SEMICOLON reduce production expression -> expression DIV expression 
+-- On RPAREN reduce production expression -> expression DIV expression 
+-- On RETURN reduce production expression -> expression DIV expression 
+-- On RESULT reduce production expression -> expression DIV expression 
+-- On RCBR reduce production expression -> expression DIV expression 
+-- On PLUS reduce production expression -> expression DIV expression 
+-- On NEW reduce production expression -> expression DIV expression 
+-- On MINUS reduce production expression -> expression DIV expression 
+-- On LPAREN reduce production expression -> expression DIV expression 
+-- On IF reduce production expression -> expression DIV expression 
+-- On IDCLASS reduce production expression -> expression DIV expression 
+-- On ID reduce production expression -> expression DIV expression 
+-- On ELSE reduce production expression -> expression DIV expression 
+-- On DIV reduce production expression -> expression DIV expression 
+-- On CSTE reduce production expression -> expression DIV expression 
+
+State 44:
+expression -> expression MINUS . expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 45
+
+State 45:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression MINUS expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On TIMES shift to state 29
+-- On RELOP shift to state 31
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production expression -> expression MINUS expression 
+-- On THIS reduce production expression -> expression MINUS expression 
+-- On THEN reduce production expression -> expression MINUS expression 
+-- On SUPER reduce production expression -> expression MINUS expression 
+-- On STR reduce production expression -> expression MINUS expression 
+-- On SEMICOLON reduce production expression -> expression MINUS expression 
+-- On RPAREN reduce production expression -> expression MINUS expression 
+-- On RETURN reduce production expression -> expression MINUS expression 
+-- On RESULT reduce production expression -> expression MINUS expression 
+-- On RCBR reduce production expression -> expression MINUS expression 
+-- On PLUS reduce production expression -> expression MINUS expression 
+-- On NEW reduce production expression -> expression MINUS expression 
+-- On MINUS reduce production expression -> expression MINUS expression 
+-- On LPAREN reduce production expression -> expression MINUS expression 
+-- On IF reduce production expression -> expression MINUS expression 
+-- On IDCLASS reduce production expression -> expression MINUS expression 
+-- On ID reduce production expression -> expression MINUS expression 
+-- On ELSE reduce production expression -> expression MINUS expression 
+-- On CSTE reduce production expression -> expression MINUS expression 
+
+State 46:
+list(expression) -> expression list(expression) . [ RPAREN ]
+-- On RPAREN reduce production list(expression) -> expression list(expression) 
+
+State 47:
+expression -> LPAREN ID . expression RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+ident -> ID . [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 48
+-- On TIMES reduce production ident -> ID 
+-- On RPAREN reduce production ident -> ID 
+-- On RELOP reduce production ident -> ID 
+-- On PLUS reduce production ident -> ID 
+-- On MINUS reduce production ident -> ID 
+-- On DOT reduce production ident -> ID 
+-- On DIV reduce production ident -> ID 
+-- On CONCATE reduce production ident -> ID 
+
+State 48:
+expression -> expression . PLUS expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . MINUS expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . TIMES expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DIV expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . CONCATE expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> LPAREN ID expression . RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+-- On TIMES shift to state 29
+-- On RPAREN shift to state 49
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On MINUS shift to state 44
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+
+State 49:
+expression -> LPAREN ID expression RPAREN . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> LPAREN ID expression RPAREN 
+-- On TIMES reduce production expression -> LPAREN ID expression RPAREN 
+-- On THIS reduce production expression -> LPAREN ID expression RPAREN 
+-- On THEN reduce production expression -> LPAREN ID expression RPAREN 
+-- On SUPER reduce production expression -> LPAREN ID expression RPAREN 
+-- On STR reduce production expression -> LPAREN ID expression RPAREN 
+-- On SEMICOLON reduce production expression -> LPAREN ID expression RPAREN 
+-- On RPAREN reduce production expression -> LPAREN ID expression RPAREN 
+-- On RETURN reduce production expression -> LPAREN ID expression RPAREN 
+-- On RESULT reduce production expression -> LPAREN ID expression RPAREN 
+-- On RELOP reduce production expression -> LPAREN ID expression RPAREN 
+-- On RCBR reduce production expression -> LPAREN ID expression RPAREN 
+-- On PLUS reduce production expression -> LPAREN ID expression RPAREN 
+-- On NEW reduce production expression -> LPAREN ID expression RPAREN 
+-- On MINUS reduce production expression -> LPAREN ID expression RPAREN 
+-- On LPAREN reduce production expression -> LPAREN ID expression RPAREN 
+-- On IF reduce production expression -> LPAREN ID expression RPAREN 
+-- On IDCLASS reduce production expression -> LPAREN ID expression RPAREN 
+-- On ID reduce production expression -> LPAREN ID expression RPAREN 
+-- On ELSE reduce production expression -> LPAREN ID expression RPAREN 
+-- On DOT reduce production expression -> LPAREN ID expression RPAREN 
+-- On DIV reduce production expression -> LPAREN ID expression RPAREN 
+-- On CSTE reduce production expression -> LPAREN ID expression RPAREN 
+-- On CONCATE reduce production expression -> LPAREN ID expression RPAREN 
+
+State 50:
+expression -> expression . PLUS expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . MINUS expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . TIMES expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DIV expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . CONCATE expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> LPAREN expression . RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ TIMES RPAREN RELOP PLUS MINUS DOT DIV CONCATE ]
+-- On TIMES shift to state 29
+-- On RPAREN shift to state 51
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On MINUS shift to state 44
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+
+State 51:
+expression -> LPAREN expression RPAREN . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> LPAREN expression RPAREN 
+-- On TIMES reduce production expression -> LPAREN expression RPAREN 
+-- On THIS reduce production expression -> LPAREN expression RPAREN 
+-- On THEN reduce production expression -> LPAREN expression RPAREN 
+-- On SUPER reduce production expression -> LPAREN expression RPAREN 
+-- On STR reduce production expression -> LPAREN expression RPAREN 
+-- On SEMICOLON reduce production expression -> LPAREN expression RPAREN 
+-- On RPAREN reduce production expression -> LPAREN expression RPAREN 
+-- On RETURN reduce production expression -> LPAREN expression RPAREN 
+-- On RESULT reduce production expression -> LPAREN expression RPAREN 
+-- On RELOP reduce production expression -> LPAREN expression RPAREN 
+-- On RCBR reduce production expression -> LPAREN expression RPAREN 
+-- On PLUS reduce production expression -> LPAREN expression RPAREN 
+-- On NEW reduce production expression -> LPAREN expression RPAREN 
+-- On MINUS reduce production expression -> LPAREN expression RPAREN 
+-- On LPAREN reduce production expression -> LPAREN expression RPAREN 
+-- On IF reduce production expression -> LPAREN expression RPAREN 
+-- On IDCLASS reduce production expression -> LPAREN expression RPAREN 
+-- On ID reduce production expression -> LPAREN expression RPAREN 
+-- On ELSE reduce production expression -> LPAREN expression RPAREN 
+-- On DOT reduce production expression -> LPAREN expression RPAREN 
+-- On DIV reduce production expression -> LPAREN expression RPAREN 
+-- On CSTE reduce production expression -> LPAREN expression RPAREN 
+-- On CONCATE reduce production expression -> LPAREN expression RPAREN 
+
+State 52:
+expression -> NEW IDCLASS LPAREN list(expression) . RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On RPAREN shift to state 53
+
+State 53:
+expression -> NEW IDCLASS LPAREN list(expression) RPAREN . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On TIMES reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On THIS reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On THEN reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On SUPER reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On STR reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On SEMICOLON reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On RPAREN reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On RETURN reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On RESULT reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On RELOP reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On RCBR reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On PLUS reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On NEW reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On MINUS reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On LPAREN reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On IF reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On IDCLASS reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On ID reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On ELSE reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On DOT reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On DIV reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On CSTE reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+-- On CONCATE reduce production expression -> NEW IDCLASS LPAREN list(expression) RPAREN 
+
+State 54:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> UMINUS expression . [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS THEN SUPER STR SEMICOLON RPAREN RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+-- On UMINUS reduce production expression -> UMINUS expression 
+-- On TIMES reduce production expression -> UMINUS expression 
+-- On THIS reduce production expression -> UMINUS expression 
+-- On THEN reduce production expression -> UMINUS expression 
+-- On SUPER reduce production expression -> UMINUS expression 
+-- On STR reduce production expression -> UMINUS expression 
+-- On SEMICOLON reduce production expression -> UMINUS expression 
+-- On RPAREN reduce production expression -> UMINUS expression 
+-- On RETURN reduce production expression -> UMINUS expression 
+-- On RESULT reduce production expression -> UMINUS expression 
+-- On RELOP reduce production expression -> UMINUS expression 
+-- On RCBR reduce production expression -> UMINUS expression 
+-- On PLUS reduce production expression -> UMINUS expression 
+-- On NEW reduce production expression -> UMINUS expression 
+-- On MINUS reduce production expression -> UMINUS expression 
+-- On LPAREN reduce production expression -> UMINUS expression 
+-- On IF reduce production expression -> UMINUS expression 
+-- On IDCLASS reduce production expression -> UMINUS expression 
+-- On ID reduce production expression -> UMINUS expression 
+-- On ELSE reduce production expression -> UMINUS expression 
+-- On DOT reduce production expression -> UMINUS expression 
+-- On DIV reduce production expression -> UMINUS expression 
+-- On CSTE reduce production expression -> UMINUS expression 
+-- On CONCATE reduce production expression -> UMINUS expression 
+
+State 55:
+instruction -> RETURN . [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS reduce production instruction -> RETURN 
+-- On THIS reduce production instruction -> RETURN 
+-- On SUPER reduce production instruction -> RETURN 
+-- On STR reduce production instruction -> RETURN 
+-- On RETURN reduce production instruction -> RETURN 
+-- On RESULT reduce production instruction -> RETURN 
+-- On RCBR reduce production instruction -> RETURN 
+-- On NEW reduce production instruction -> RETURN 
+-- On LPAREN reduce production instruction -> RETURN 
+-- On IF reduce production instruction -> RETURN 
+-- On IDCLASS reduce production instruction -> RETURN 
+-- On ID reduce production instruction -> RETURN 
+-- On ELSE reduce production instruction -> RETURN 
+-- On CSTE reduce production instruction -> RETURN 
+
+State 56:
+instruction -> IF . expression THEN instruction ELSE instruction [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 57
+
+State 57:
+expression -> expression . PLUS expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . MINUS expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . TIMES expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DIV expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . CONCATE expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . RELOP expression [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ TIMES THEN RELOP PLUS MINUS DOT DIV CONCATE ]
+instruction -> IF expression . THEN instruction ELSE instruction [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On TIMES shift to state 29
+-- On THEN shift to state 58
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On MINUS shift to state 44
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+
+State 58:
+instruction -> IF expression THEN . instruction ELSE instruction [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RETURN shift to state 55
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IF shift to state 56
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On instruction shift to state 59
+-- On ident shift to state 62
+-- On expression shift to state 65
+
+State 59:
+instruction -> IF expression THEN instruction . ELSE instruction [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On ELSE shift to state 60
+
+State 60:
+instruction -> IF expression THEN instruction ELSE . instruction [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RETURN shift to state 55
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IF shift to state 56
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On instruction shift to state 61
+-- On ident shift to state 62
+-- On expression shift to state 65
+
+State 61:
+instruction -> IF expression THEN instruction ELSE instruction . [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On THIS reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On SUPER reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On STR reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On RETURN reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On RESULT reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On RCBR reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On NEW reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On LPAREN reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On IF reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On IDCLASS reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On ID reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On ELSE reduce production instruction -> IF expression THEN instruction ELSE instruction 
+-- On CSTE reduce production instruction -> IF expression THEN instruction ELSE instruction 
+
+State 62:
+expression -> ident . [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+instruction -> ident . ASSIGN expression [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On ASSIGN shift to state 63
+-- On TIMES reduce production expression -> ident 
+-- On SEMICOLON reduce production expression -> ident 
+-- On RELOP reduce production expression -> ident 
+-- On PLUS reduce production expression -> ident 
+-- On MINUS reduce production expression -> ident 
+-- On DOT reduce production expression -> ident 
+-- On DIV reduce production expression -> ident 
+-- On CONCATE reduce production expression -> ident 
+
+State 63:
+instruction -> ident ASSIGN . expression [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On ident shift to state 27
+-- On expression shift to state 64
+
+State 64:
+expression -> expression . PLUS expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . MINUS expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . TIMES expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DIV expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . CONCATE expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . RELOP expression [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ UMINUS TIMES THIS SUPER STR RETURN RESULT RELOP RCBR PLUS NEW MINUS LPAREN IF IDCLASS ID ELSE DOT DIV CSTE CONCATE ]
+instruction -> ident ASSIGN expression . [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On TIMES shift to state 29
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On MINUS shift to state 44
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+-- On UMINUS reduce production instruction -> ident ASSIGN expression 
+-- On THIS reduce production instruction -> ident ASSIGN expression 
+-- On SUPER reduce production instruction -> ident ASSIGN expression 
+-- On STR reduce production instruction -> ident ASSIGN expression 
+-- On RETURN reduce production instruction -> ident ASSIGN expression 
+-- On RESULT reduce production instruction -> ident ASSIGN expression 
+-- On RCBR reduce production instruction -> ident ASSIGN expression 
+-- On NEW reduce production instruction -> ident ASSIGN expression 
+-- On LPAREN reduce production instruction -> ident ASSIGN expression 
+-- On IF reduce production instruction -> ident ASSIGN expression 
+-- On IDCLASS reduce production instruction -> ident ASSIGN expression 
+-- On ID reduce production instruction -> ident ASSIGN expression 
+-- On ELSE reduce production instruction -> ident ASSIGN expression 
+-- On CSTE reduce production instruction -> ident ASSIGN expression 
+
+State 65:
+expression -> expression . PLUS expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . MINUS expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . TIMES expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DIV expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . CONCATE expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . RELOP expression [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+expression -> expression . DOT ident LPAREN list(expression) RPAREN [ TIMES SEMICOLON RELOP PLUS MINUS DOT DIV CONCATE ]
+instruction -> expression . SEMICOLON [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On TIMES shift to state 29
+-- On SEMICOLON shift to state 66
+-- On RELOP shift to state 31
+-- On PLUS shift to state 40
+-- On MINUS shift to state 44
+-- On DOT shift to state 33
+-- On DIV shift to state 42
+-- On CONCATE shift to state 38
+
+State 66:
+instruction -> expression SEMICOLON . [ UMINUS THIS SUPER STR RETURN RESULT RCBR NEW LPAREN IF IDCLASS ID ELSE CSTE ]
+-- On UMINUS reduce production instruction -> expression SEMICOLON 
+-- On THIS reduce production instruction -> expression SEMICOLON 
+-- On SUPER reduce production instruction -> expression SEMICOLON 
+-- On STR reduce production instruction -> expression SEMICOLON 
+-- On RETURN reduce production instruction -> expression SEMICOLON 
+-- On RESULT reduce production instruction -> expression SEMICOLON 
+-- On RCBR reduce production instruction -> expression SEMICOLON 
+-- On NEW reduce production instruction -> expression SEMICOLON 
+-- On LPAREN reduce production instruction -> expression SEMICOLON 
+-- On IF reduce production instruction -> expression SEMICOLON 
+-- On IDCLASS reduce production instruction -> expression SEMICOLON 
+-- On ID reduce production instruction -> expression SEMICOLON 
+-- On ELSE reduce production instruction -> expression SEMICOLON 
+-- On CSTE reduce production instruction -> expression SEMICOLON 
+
+State 67:
+block -> LCBR list(declaration) list(instruction) . RCBR [ RCBR IS EOF DEF ]
+-- On RCBR shift to state 68
+
+State 68:
+block -> LCBR list(declaration) list(instruction) RCBR . [ RCBR IS EOF DEF ]
+-- On RCBR reduce production block -> LCBR list(declaration) list(instruction) RCBR 
+-- On IS reduce production block -> LCBR list(declaration) list(instruction) RCBR 
+-- On EOF reduce production block -> LCBR list(declaration) list(instruction) RCBR 
+-- On DEF reduce production block -> LCBR list(declaration) list(instruction) RCBR 
+
+State 69:
+list(instruction) -> instruction . list(instruction) [ RCBR ]
+-- On UMINUS shift to state 12
+-- On THIS shift to state 13
+-- On SUPER shift to state 14
+-- On STR shift to state 15
+-- On RETURN shift to state 55
+-- On RESULT shift to state 16
+-- On NEW shift to state 17
+-- On LPAREN shift to state 20
+-- On IF shift to state 56
+-- On IDCLASS shift to state 21
+-- On ID shift to state 23
+-- On CSTE shift to state 24
+-- On list(instruction) shift to state 70
+-- On instruction shift to state 69
+-- On ident shift to state 62
+-- On expression shift to state 65
+-- On RCBR reduce production list(instruction) -> 
+
+State 70:
+list(instruction) -> instruction list(instruction) . [ RCBR ]
+-- On RCBR reduce production list(instruction) -> instruction list(instruction) 
+
+State 71:
+list(declaration) -> declaration . list(declaration) [ UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On VAR shift to state 5
+-- On list(declaration) shift to state 72
+-- On declaration shift to state 71
+-- On UMINUS reduce production list(declaration) -> 
+-- On THIS reduce production list(declaration) -> 
+-- On SUPER reduce production list(declaration) -> 
+-- On STR reduce production list(declaration) -> 
+-- On RPAREN reduce production list(declaration) -> 
+-- On RETURN reduce production list(declaration) -> 
+-- On RESULT reduce production list(declaration) -> 
+-- On RCBR reduce production list(declaration) -> 
+-- On NEW reduce production list(declaration) -> 
+-- On LPAREN reduce production list(declaration) -> 
+-- On LCBR reduce production list(declaration) -> 
+-- On IS reduce production list(declaration) -> 
+-- On IF reduce production list(declaration) -> 
+-- On IDCLASS reduce production list(declaration) -> 
+-- On ID reduce production list(declaration) -> 
+-- On EXTENDS reduce production list(declaration) -> 
+-- On DEF reduce production list(declaration) -> 
+-- On CSTE reduce production list(declaration) -> 
+
+State 72:
+list(declaration) -> declaration list(declaration) . [ UMINUS THIS SUPER STR RPAREN RETURN RESULT RCBR NEW LPAREN LCBR IS IF IDCLASS ID EXTENDS DEF CSTE ]
+-- On UMINUS reduce production list(declaration) -> declaration list(declaration) 
+-- On THIS reduce production list(declaration) -> declaration list(declaration) 
+-- On SUPER reduce production list(declaration) -> declaration list(declaration) 
+-- On STR reduce production list(declaration) -> declaration list(declaration) 
+-- On RPAREN reduce production list(declaration) -> declaration list(declaration) 
+-- On RETURN reduce production list(declaration) -> declaration list(declaration) 
+-- On RESULT reduce production list(declaration) -> declaration list(declaration) 
+-- On RCBR reduce production list(declaration) -> declaration list(declaration) 
+-- On NEW reduce production list(declaration) -> declaration list(declaration) 
+-- On LPAREN reduce production list(declaration) -> declaration list(declaration) 
+-- On LCBR reduce production list(declaration) -> declaration list(declaration) 
+-- On IS reduce production list(declaration) -> declaration list(declaration) 
+-- On IF reduce production list(declaration) -> declaration list(declaration) 
+-- On IDCLASS reduce production list(declaration) -> declaration list(declaration) 
+-- On ID reduce production list(declaration) -> declaration list(declaration) 
+-- On EXTENDS reduce production list(declaration) -> declaration list(declaration) 
+-- On DEF reduce production list(declaration) -> declaration list(declaration) 
+-- On CSTE reduce production list(declaration) -> declaration list(declaration) 
+
+State 73:
+prog -> list(classe) block . EOF [ # ]
+-- On EOF shift to state 74
+
+State 74:
+prog -> list(classe) block EOF . [ # ]
+-- On # reduce production prog -> list(classe) block EOF 
+
+State 75:
+list(classe) -> classe . list(classe) [ LCBR ]
+-- On CLASS shift to state 1
+-- On list(classe) shift to state 76
+-- On classe shift to state 75
+-- On boption(CLASS) shift to state 77
+-- On OBJECT reduce production boption(CLASS) -> 
+-- On LCBR reduce production list(classe) -> 
+-- On IDCLASS reduce production boption(CLASS) -> 
+
+State 76:
+list(classe) -> classe list(classe) . [ LCBR ]
+-- On LCBR reduce production list(classe) -> classe list(classe) 
+
+State 77:
+classe -> boption(CLASS) . boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On OBJECT shift to state 78
+-- On boption(OBJECT) shift to state 79
+-- On IDCLASS reduce production boption(OBJECT) -> 
+
+State 78:
+boption(OBJECT) -> OBJECT . [ IDCLASS ]
+-- On IDCLASS reduce production boption(OBJECT) -> OBJECT 
+
+State 79:
+classe -> boption(CLASS) boption(OBJECT) . IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On IDCLASS shift to state 80
+
+State 80:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS . LPAREN list(declaration) option(extends) option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On LPAREN shift to state 81
+
+State 81:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN . list(declaration) option(extends) option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On VAR shift to state 5
+-- On list(declaration) shift to state 82
+-- On declaration shift to state 71
+-- On LCBR reduce production list(declaration) -> 
+-- On IS reduce production list(declaration) -> 
+-- On EXTENDS reduce production list(declaration) -> 
+
+State 82:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) . option(extends) option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On EXTENDS shift to state 83
+-- On option(extends) shift to state 85
+-- On extends shift to state 111
+-- On LCBR reduce production option(extends) -> 
+-- On IS reduce production option(extends) -> 
+
+State 83:
+extends -> EXTENDS . IDCLASS [ LCBR IS ]
+-- On IDCLASS shift to state 84
+
+State 84:
+extends -> EXTENDS IDCLASS . [ LCBR IS ]
+-- On LCBR reduce production extends -> EXTENDS IDCLASS 
+-- On IS reduce production extends -> EXTENDS IDCLASS 
+
+State 85:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) . option(block) IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On LCBR shift to state 4
+-- On option(block) shift to state 86
+-- On block shift to state 110
+-- On IS reduce production option(block) -> 
+
+State 86:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) . IS block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On IS shift to state 87
+
+State 87:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS . block_class [ OBJECT LCBR IDCLASS CLASS ]
+-- On LCBR shift to state 88
+-- On block_class shift to state 109
+
+State 88:
+block_class -> LCBR . list(declaration) list(methode) RCBR [ OBJECT LCBR IDCLASS CLASS ]
+-- On VAR shift to state 5
+-- On list(declaration) shift to state 89
+-- On declaration shift to state 71
+-- On RCBR reduce production list(declaration) -> 
+-- On DEF reduce production list(declaration) -> 
+
+State 89:
+block_class -> LCBR list(declaration) . list(methode) RCBR [ OBJECT LCBR IDCLASS CLASS ]
+-- On DEF shift to state 90
+-- On methode shift to state 105
+-- On list(methode) shift to state 107
+-- On RCBR reduce production list(methode) -> 
+
+State 90:
+methode -> DEF . boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF . boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type ASSIGN block [ RCBR DEF ]
+-- On OVERRIDE shift to state 91
+-- On boption(OVERRIDE) shift to state 92
+-- On ID reduce production boption(OVERRIDE) -> 
+
+State 91:
+boption(OVERRIDE) -> OVERRIDE . [ ID ]
+-- On ID reduce production boption(OVERRIDE) -> OVERRIDE 
+
+State 92:
+methode -> DEF boption(OVERRIDE) . ID LPAREN list(declaration) RPAREN option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF boption(OVERRIDE) . ID LPAREN list(declaration) RPAREN returned_type ASSIGN block [ RCBR DEF ]
+-- On ID shift to state 93
+
+State 93:
+methode -> DEF boption(OVERRIDE) ID . LPAREN list(declaration) RPAREN option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF boption(OVERRIDE) ID . LPAREN list(declaration) RPAREN returned_type ASSIGN block [ RCBR DEF ]
+-- On LPAREN shift to state 94
+
+State 94:
+methode -> DEF boption(OVERRIDE) ID LPAREN . list(declaration) RPAREN option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF boption(OVERRIDE) ID LPAREN . list(declaration) RPAREN returned_type ASSIGN block [ RCBR DEF ]
+-- On VAR shift to state 5
+-- On list(declaration) shift to state 95
+-- On declaration shift to state 71
+-- On RPAREN reduce production list(declaration) -> 
+
+State 95:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) . RPAREN option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) . RPAREN returned_type ASSIGN block [ RCBR DEF ]
+-- On RPAREN shift to state 96
+
+State 96:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN . option(returned_type) IS block [ RCBR DEF ]
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN . returned_type ASSIGN block [ RCBR DEF ]
+-- On COLON shift to state 97
+-- On returned_type shift to state 99
+-- On option(returned_type) shift to state 102
+-- On IS reduce production option(returned_type) -> 
+
+State 97:
+returned_type -> COLON . IDCLASS [ IS ASSIGN ]
+-- On IDCLASS shift to state 98
+
+State 98:
+returned_type -> COLON IDCLASS . [ IS ASSIGN ]
+-- On IS reduce production returned_type -> COLON IDCLASS 
+-- On ASSIGN reduce production returned_type -> COLON IDCLASS 
+
+State 99:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type . ASSIGN block [ RCBR DEF ]
+option(returned_type) -> returned_type . [ IS ]
+-- On ASSIGN shift to state 100
+-- On IS reduce production option(returned_type) -> returned_type 
+
+State 100:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type ASSIGN . block [ RCBR DEF ]
+-- On LCBR shift to state 4
+-- On block shift to state 101
+
+State 101:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type ASSIGN block . [ RCBR DEF ]
+-- On RCBR reduce production methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type ASSIGN block 
+-- On DEF reduce production methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN returned_type ASSIGN block 
+
+State 102:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) . IS block [ RCBR DEF ]
+-- On IS shift to state 103
+
+State 103:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) IS . block [ RCBR DEF ]
+-- On LCBR shift to state 4
+-- On block shift to state 104
+
+State 104:
+methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) IS block . [ RCBR DEF ]
+-- On RCBR reduce production methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) IS block 
+-- On DEF reduce production methode -> DEF boption(OVERRIDE) ID LPAREN list(declaration) RPAREN option(returned_type) IS block 
+
+State 105:
+list(methode) -> methode . list(methode) [ RCBR ]
+-- On DEF shift to state 90
+-- On methode shift to state 105
+-- On list(methode) shift to state 106
+-- On RCBR reduce production list(methode) -> 
+
+State 106:
+list(methode) -> methode list(methode) . [ RCBR ]
+-- On RCBR reduce production list(methode) -> methode list(methode) 
+
+State 107:
+block_class -> LCBR list(declaration) list(methode) . RCBR [ OBJECT LCBR IDCLASS CLASS ]
+-- On RCBR shift to state 108
+
+State 108:
+block_class -> LCBR list(declaration) list(methode) RCBR . [ OBJECT LCBR IDCLASS CLASS ]
+-- On OBJECT reduce production block_class -> LCBR list(declaration) list(methode) RCBR 
+-- On LCBR reduce production block_class -> LCBR list(declaration) list(methode) RCBR 
+-- On IDCLASS reduce production block_class -> LCBR list(declaration) list(methode) RCBR 
+-- On CLASS reduce production block_class -> LCBR list(declaration) list(methode) RCBR 
+
+State 109:
+classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class . [ OBJECT LCBR IDCLASS CLASS ]
+-- On OBJECT reduce production classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class 
+-- On LCBR reduce production classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class 
+-- On IDCLASS reduce production classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class 
+-- On CLASS reduce production classe -> boption(CLASS) boption(OBJECT) IDCLASS LPAREN list(declaration) option(extends) option(block) IS block_class 
+
+State 110:
+option(block) -> block . [ IS ]
+-- On IS reduce production option(block) -> block 
+
+State 111:
+option(extends) -> extends . [ LCBR IS ]
+-- On LCBR reduce production option(extends) -> extends 
+-- On IS reduce production option(extends) -> extends 
+

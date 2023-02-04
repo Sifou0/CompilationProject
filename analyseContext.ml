@@ -357,11 +357,19 @@ let getTypeOfExp e (cn : string) (spn : string) (rt : string) (vm : (string, str
   | NewInstance(s,le) -> s
   | Access(ex,i) -> getTypeOfIdent i cn spn rt vm
   | Unary(ex) -> getTypeOfExp ex cn spn rt vm
-  | Plus of expression*expression 
-  | Minus of expression*expression
-  | Times of expression*expression
-  | Div of expression*expression
-  | Concate of expression*expression
-  | Compo of opComp*expression*expression 
-  | CallElement of expression*expression
-  | EnvoiMsg of expression*ident*expression list
+  | Plus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Minus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Times(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Div(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Concate(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Compo(_,e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | CallElement(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+;;
+
+let checkVarNotResult b = 
+  let rec inter l =
+    match l with
+    | [] -> true
+    | x::s -> (x.name <> "result") && inter s
+  in inter b.declarations
+
