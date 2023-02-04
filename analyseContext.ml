@@ -47,7 +47,7 @@ let rec countNameClass str l =
 
 let verifyDoubleNameOfClass l =
   List.fold_left (fun acc x -> acc && (
-    if ((countNameClas x.name_class l) < 2) then true else raise (VC_Error ("La classe \"" ^ x.name_class ^ "\" est définie plusieurs fois.")))) true l
+    if ((countNameClass x.name_class l) < 2) then true else raise (VC_Error ("La classe \"" ^ x.name_class ^ "\" est définie plusieurs fois.")))) true l
 ;;
 
 
@@ -66,7 +66,6 @@ let rec verifyExistanceOfExpKey str e =
   | Minus(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Times(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Div(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
-
   | Comp(_,g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Cast(s,e) -> (String.equal str s) || (verifyExistanceOfExpKey str e)
   | NewInstance(s,le) -> (String.equal str s) || (List.fold_left (fun acc x -> acc && (verifyExistanceOfExpKey str x)) false le)
@@ -188,12 +187,23 @@ let rec verifyYesConstructor ld =
       verifyYesConstructor s
 ;;
 
-let getConstrFromClass c =
+(* let getConstrFromClass c =
   c.constructor
-;;
+;; *)
+
 
 (* Compare si deux listes de paramètres sont équivalentes *)
-let rec compareLenParam lp1 lp2 =
+let compareLenParam lp1 lp2 = 
+  if List.length lp1 = List.length lp2 then 
+  let rec types l1 l2 = match l1 with
+  | [] -> true
+  | x::s -> match l2 with
+    | y::t -> x.class_type = y.class_type && types s t
+in types lp1 lp2
+else false
+;;
+
+(* let rec compareLenParam lp1 lp2 =
   match lp1 with
   | [] ->
     begin
@@ -207,7 +217,7 @@ let rec compareLenParam lp1 lp2 =
       | [] -> false
       | p2::s2 -> if ((p1.var == p2.var) && (List.length p1.declarations) == (List.length p2.declarations) && (String.equal p1.name p2.name)) then compareLenParam s1 s2 else false
     end
-;;
+;; *)
 
 (* Récupère le nom de la classe d'une instanciation ainsi que ces paramètres *)
 let getInstanciationInfo i =
@@ -217,14 +227,17 @@ let getInstanciationInfo i =
 ;;
 
 (* Retourne le nombre de paramètres nécessaires pour instancier la classe "c" *)
-let getNbParamsRequiered c =
+let getNbParamsRequiered c = List.length c.params
+
+(* let getNbParamsRequiered c =
   let rec gtnbparam acc lp =
     match lp with
     |[] ->acc
     |_::s  -> gtnbparam (acc+1) s
   in
   gtnbparam 0 c.params
-;;
+;; *)
+
 
 (* vérifie la cohérence du constructeur par rapport à l'en-tete de la classe (Son nom, le nombre et le type des arguments, l'appel au constructeur de classe héritée)
 let verifierCoherenceConstr ld =
@@ -268,8 +281,87 @@ let verifyNameClass ld =
       true
 ;;
 
+let rec checkExpressionThisSuper (e : expression) : bool = 
+  match e with
+  | Ident -> (match e with
+    | This -> false
+    | Super -> false
+    | Local(_) -> true
+    | Result -> true)
+  | IntCste(i)-> true
+  | StringCste(s)-> true
+  | Cast(s,e1)-> checkExpressionThisSuper e1
+  | NewInstance(s,le)-> List.fold_left checkExpressionThisSuper true le
+  | Access(e1,i)-> checkExpressionThisSuper e1 && (match i with
+    | This -> false
+    | Super -> false
+    | Local(_) -> true
+    | Result -> true)
+  | Unary(e1)-> checkExpressionThisSuper e1
+  | Plus(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+  | Minus(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+  | Times(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+  | Div(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+  | Concate(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+  | Compo(_,e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
 
 
+let checkSuperThisInMain b =
+  let rec inter l = 
+  match l with
+  | [] -> true
+  | x::s ->
+    (
+      match x with
+        | Exp(e) -> checkExpressionThisSuper e && inter s
+        | Aff(i,e) -> 
+          (
+              match i with
+            | This -> false
+            | Super -> false
+            | Local(_) -> true
+            | Result -> true
+          ) && checkExpressionThisSuper e && inter s
+        | Ite(e,i1,i2) -> checkExpressionThisSuper e && inter i1 && inter i2
+        | Return -> true
+    )
+  in inter b.instructions
+;;
+
+let isUpclass c l = List.exists c.superclass l;;
+(* Integer et String ne font pas partie de la liste des classes autorisees donc pas besoin de verif dessus *)
+
+ let checkMethode md l = 
+  (List.exists md.return_type l || md.return_type = "Integer" || md.return_type = "String") &&
+  let rec inter lp = 
+    match lp with
+    | [] -> true
+    | x::s -> List.exists x.class_type l && inter s
+  in inter md.params
+;;
+
+let getTypeOfIdent i (cn : string) (spn : string) (rt : string) (vm : (string, string) t) : string =
+  match i with
+  | This -> cn
+  | Super -> spn
+  | Local(s) -> try(Hashtbl.find vm s) with Not_found -> raise (VC_Error ("La variable " ^ s ^ " n'existe pas."))
+  | Result -> rt
 
 
-
+let getTypeOfExp e (cn : string) (spn : string) (rt : string) (vm : (string, string) t) = 
+  match e with
+  | Ident -> getTypeOfIdent e cn spn rt vm
+  | IntCste -> "Integer"
+  | StringCste -> "String"
+  | Cast(s,ex) -> s
+  | NewInstance(s,le) -> s
+  | Access(ex,i) -> getTypeOfIdent i cn spn rt vm
+  | Unary(ex) -> getTypeOfExp ex cn spn rt vm
+  | Plus of expression*expression 
+  | Minus of expression*expression
+  | Times of expression*expression
+  | Div of expression*expression
+  | Concate of expression*expression
+  | Compo of opComp*expression*expression 
+  | CallElement of expression*expression
+  | EnvoiMsg of expression*ident*expression list

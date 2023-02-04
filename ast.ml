@@ -3,7 +3,7 @@ Eq | Neq | Lt | Le | Gt | Ge
 
 type prog = {
   classes : class_def list;
-  block : block
+  block : block;
 }
 
 and class_def = {
