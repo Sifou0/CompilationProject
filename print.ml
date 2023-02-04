@@ -74,16 +74,32 @@ List.iter printDecl bl_cl.declarations;
 List.iter printInstruction bl_cl.instructions;
 print_string " } ";
 
+let rec printObjet ob =
+  print_string "object ";
+  print_string obj.name_class ;
+  print_String " ";
+  printOption printBlock ob.constructor;
+  printBlockClass ob.content;
+
 let rec printClass cl =
-  print_string "Class ";
-  print_string cl.name_class;
+ if cl.is_class = true 
+  then
+   print_string "Class ";
+   print_string cl.name_class;
   print_string " ( ";
   List.iter printDecl cl.params;
-  print_string " )";
-  print_string " extends ";
-  printOption print_string cl.superclass;
+  print_string " ) ";
+  (match cl.superclass with
+    |None -> print_string " "
+    |Some s -> print_string " extends "; print_string s
+  );
   printOption printBlock cl.constructor ;
-
-  
   printBlockClass cl.content;
-  
+else
+  printObjet cl
+;;
+
+let rec printAll lc i =
+    List.iter printClass lc;
+    printInstr i;
+    print_newline ()
