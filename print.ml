@@ -55,12 +55,12 @@ let rec printOption f x =
 
 let printDecl decl = 
   print_string decl.class_type ; print_string " ";
-  if(decl.is_auto)print_string "auto";
-    print_string decl.name ;print_string " ";   
+  if(decl.is_auto) then print_string "auto";
+    print_string decl.name ;print_string " ";
 ;;
 let rec printMethod meth = 
   print_string "def ";
-  if(meth.is_override) print_string"Override";
+  if(meth.is_override) then print_string"Override";
   print_string meth.name_meth;
   print_string "( ";
   List.iter printDecl meth.params ;
@@ -103,3 +103,5 @@ let rec printAll lc i =
     List.iter printClass lc;
     printInstr i;
     print_newline ()
+;;
+
