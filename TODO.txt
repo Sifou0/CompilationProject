@@ -1,25 +1,24 @@
 - Vérifie la présence de duplicatas dans les noms de classes V
 - Vérifie la présence de classes avec des noms réservés (“String” et “Integer”) V
-- Vérifie si la classe mère d’une classe fille est bien définie et n’est pas la classe “String” ou “Integer”
-- Vérifie qu’il n’y a pas de cycle dans l’héritage des classes
+- Vérifie si la classe mère d’une classe fille est bien définie et n’est pas la classe “String” ou “Integer” V
+- Vérifie qu’il n’y a pas de cycle dans l’héritage des classes V
 - Vérifie que l'identificateur “this” n’est pas utilisé dans le bloc principal V 
 - Vérifie que l'identificateur “super” n’est pas utilisé dans le bloc principal V
-- Vérifie que lorsqu’une méthode est définie comme étant un “override”, celle-ci est bien en train de redéfinir une méthode d’une classe mère non statique
-- Vérifie que chaque déclaration de classe contient un unique constructeur
-- Vérifie que la déclaration du constructeur prend en paramètres les mêmes arguments que l'en-tête de la classe (même nombre et même type)
-- Vérifie que la déclaration du constructeur fait appel au constructeur de la classe mère en transmettant le bon nombre de paramètres
-- Vérifie que les classes utilisés dans le bloc principal sont définies
+- Vérifie que lorsqu’une méthode est définie comme étant un “override”, celle-ci est bien en train de redéfinir une méthode d’une classe mère V
+- Vérifie que la déclaration du constructeur prend en paramètres les mêmes arguments que l'en-tête de la classe (même nombre et même type)  ??????
+- Vérifie que la déclaration du constructeur fait appel au constructeur de la classe mère en transmettant le bon nombre de paramètres V
+- Vérifie que les classes utilisés dans le bloc principal sont définies  V
 - Vérifie que le type des attributs et le type de retour des méthodes existe
-- ?????? Vérifie qu’une concaténation s’effectue entre des expressions de type String
-- !!!!!! Vérifie qu’une opération de comparaison s’effectue entre des expressions de type Integer
-- !!!!!! Vérifie qu’une opération PLUS, MOINS, DIV, MULT s’effectue entre des expressions de type Integer
-- !!!!!! Vérifie que les affectations se font en respectant le type des deux expressions et en prenant en compte les relations d’héritages
-- Vérifier le type des paramètres lors d’un appel d’une méthode !!!!
+- Vérifie qu’une concaténation s’effectue entre des expressions de type String V
+- Vérifie qu’une opération de comparaison s’effectue entre des expressions de type Integer V
+- Vérifie qu’une opération PLUS, MOINS, DIV, MULT s’effectue entre des expressions de type Integer V
+- Vérifie que les affectations se font en respectant le type des deux expressions et en prenant en compte les relations d’héritages V
+- Vérifier le type des paramètres lors d’un appel d’une méthode FF
 - Vérifier qu’aucune variable porte le nom “result”  V
 - Vérifier que les variables utilisées sont initialisées avant d’être utilisées
 - Vérifier que les méthodes retournant un objet on bien une d’affectation vers le champ “result”
-- Vérifier que les méthodes “Void“ ne retournent rien
-- Vérifier que le type des arguments sont du bon type lors de l’appel du constructeur de la classe mère
+- Vérifier que les méthodes “Void“ ne retournent rien I
+- Vérifier que le type des arguments sont du bon type lors de l’appel du constructeur de la classe mère FF
 
 
 

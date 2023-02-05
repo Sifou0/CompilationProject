@@ -357,13 +357,13 @@ let getTypeOfExp e (cn : string) (spn : string) (rt : string) (vm : (string, str
   | NewInstance(s,le) -> s
   | Access(ex,i) -> getTypeOfIdent i cn spn rt vm
   | Unary(ex) -> getTypeOfExp ex cn spn rt vm
-  | Plus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Minus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Times(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Div(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Concate(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Compo(_,e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | CallElement(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e1 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Plus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Minus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Times(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Div(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Concate(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "String")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | Compo(_,e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
+  | CallElement(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
 ;;
 
 let checkVarNotResult b = 
@@ -372,4 +372,25 @@ let checkVarNotResult b =
     | [] -> true
     | x::s -> (x.name <> "result") && inter s
   in inter b.declarations
+;;
 
+let cycleHeritage c ht = 
+  let rec inter cd acc =
+    match cd.superclas with
+    | None -> true
+    | Some a -> if List.find a acc then false else inter (Hashtbl.find ht a) a::acc
+  in inter c []
+
+let checkMethInClass m cd =
+  let rec inter l = match l with
+  | [] -> false
+  | x::s -> if x.name_meth = m then true else inter m s
+in inter cd.content.methodes
+;;
+
+let correctOverride m cd ht =
+  let rec inter mn s =
+    match s with
+    | None -> false
+    | Some a -> checkMethInClass m (Hashtbl.find ht a) || inter m (Hashtbl.find ht a)
+  in inter m cd.name_class;;
