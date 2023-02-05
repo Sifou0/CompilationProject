@@ -1,4 +1,5 @@
 open Ast
+;;
 
 (* Récupère la définition d'une classe depuis une chaine de caractère *)
 let rec getStrOfClass str ld =
@@ -60,18 +61,20 @@ let getOptString s =
 (* vérifier si un mot clé "str" est utilisé dans l'expression *)
 let rec verifyExistanceOfExpKey str e =
   match e with
-  | Id s -> String.equal str s
-  | Cste _ -> false
+  | Ident s -> false
+  | StringCste s -> false
+  | IntCste s -> false
   | Plus(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Minus(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Times(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Div(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
-  | Comp(_,g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
+  | Compo(_,g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Cast(s,e) -> (String.equal str s) || (verifyExistanceOfExpKey str e)
   | NewInstance(s,le) -> (String.equal str s) || (List.fold_left (fun acc x -> acc && (verifyExistanceOfExpKey str x)) false le)
-  | StringCste s -> String.equal str s
   | Concate(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
-
+  | Access(e,i) -> verifyExistanceOfExpKey str e
+  | CallElement(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
+  | Unary _ -> false
 
   let rec verifyExistanceOfInstrKey str i =
     match i with
@@ -133,7 +136,7 @@ let rec verifyExistanceMeth m lm =
   match lm with
   | [] -> false
   | meth::l -> if (
-  (String.equal meth.methodName m.methodName) && 
+  (String.equal meth.name_meth m.name_meth) && 
   (String.equal (getOptString meth.return_type) (getOptString m.return_type)) && 
   (compareDecls meth.params m.args)) then true else  verifyExistanceMeth m l
 ;;
@@ -146,7 +149,7 @@ let verifyUsageOverride ld =
     | c::s -> let lm = getMethodesRedefind c ld
               in let lmo = getOverrideMethods c
               in (List.fold_left (fun acc m -> acc && (
-                if (vverifyExistanceMeth m lm) then true
+                if (verifyExistanceMeth m lm) then true
                 else raise (VC_Error ("La méthode \"" ^ m.name_meth ^ "\" dans la classe \"" ^ c.name_class ^ "\" ne redéfinie aucune méthode."))
                 )) true lmo) && verifOverride s
   in verifOverride ld
@@ -281,9 +284,10 @@ let verifyNameClass ld =
       true
 ;;
 
+
 let rec checkExpressionThisSuper (e : expression) : bool = 
   match e with
-  | Ident -> (match e with
+  | Ident ex -> (match ex with
     | This -> false
     | Super -> false
     | Local(_) -> true
@@ -291,7 +295,7 @@ let rec checkExpressionThisSuper (e : expression) : bool =
   | IntCste(i)-> true
   | StringCste(s)-> true
   | Cast(s,e1)-> checkExpressionThisSuper e1
-  | NewInstance(s,le)-> List.fold_left checkExpressionThisSuper true le
+  | NewInstance(s,le)-> List.for_all checkExpressionThisSuper le
   | Access(e1,i)-> checkExpressionThisSuper e1 && (match i with
     | This -> false
     | Super -> false
@@ -304,6 +308,7 @@ let rec checkExpressionThisSuper (e : expression) : bool =
   | Div(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
   | Concate(e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
   | Compo(_,e1,e2)-> checkExpressionThisSuper e1 && checkExpressionThisSuper e2
+
 
 
 let checkSuperThisInMain b =
@@ -376,7 +381,7 @@ let checkVarNotResult b =
 
 let cycleHeritage c ht = 
   let rec inter cd acc =
-    match cd.superclas with
+    match cd.superclass with
     | None -> true
     | Some a -> if List.find a acc then false else inter (Hashtbl.find ht a) a::acc
   in inter c []

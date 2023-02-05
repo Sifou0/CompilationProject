@@ -55,7 +55,7 @@
 %left TIMES DIV
 %left RELOP
 %left DOT
-%right LPAREN
+//%right LPAREN
 %left CONCATE
 %right UMINUS 
 %start <Ast.prog> prog
@@ -158,7 +158,7 @@ expression:
     | LPAREN e =  expression RPAREN  { e }
     | a = expression op = RELOP b = expression {Compo(op,a,b)}
     | a = expression DOT i = ident { Access(a,i) }
-    | a = expression DOT n = ident LPAREN le = list(expression) RPAREN { EnvoiMsg(a,n,le) }
+  //  | a = expression DOT n = ident LPAREN le = list(expression) RPAREN { EnvoiMsg(a,n,le) }
 
 
 // envoiMsg : 

@@ -96,8 +96,8 @@ and expression = (*A compléter*)
   | Div of expression*expression
   | Concate of expression*expression
   | Compo of opComp*expression*expression 
-  | CallElement of expression*expression
-  | EnvoiMsg of expression*ident*expression list
+  (* | CallElement of expression*expression *)
+  (* | EnvoiMsg of expression*ident*expression list *)
 
 
 exception VC_Error of string
