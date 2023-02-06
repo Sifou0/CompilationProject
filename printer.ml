@@ -89,7 +89,7 @@ let rec printClass cl =
    print_string "Class ";
    print_string cl.name_class;
   print_string " ( ";
-  List.iter printDecl cl.params;
+  List.iter printDecl Some(cl.params);
   print_string " ) ";
   (match cl.superclass with
     |None -> print_string " "
@@ -106,7 +106,7 @@ else
 
 let rec printAll lc i =
     List.iter printClass lc;
-    printInstruction i;
+    printBlock i;
     print_newline ()
 ;;
 

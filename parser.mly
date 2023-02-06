@@ -3,7 +3,6 @@
 %}
 
 %token <string> ID
-
 %token <int> CSTE
 %token <Ast.opComp> RELOP
 %token PLUS MINUS TIMES DIV
@@ -20,6 +19,7 @@
 %token EXTENDS
 %token NEW
 %token OBJECT
+%token COMMA
 
 %token DOT
 %token <string>  IDCLASS
@@ -42,7 +42,8 @@
 %type <Ast.block_class> block_class
 %type <Ast.method_def> methode
 %type <Ast.ident> ident
-
+%type <Ast.declaration> factoredVarParam
+%type <Ast.declaration list> params
 %type <Ast.instruction> instruction
 //%type <Ast.method_def>methode
 /*Les precedences*/
@@ -50,7 +51,6 @@
 
 %token UMINUS
 %token EOF
-
 %left PLUS MINUS        
 %left TIMES DIV
 %left RELOP
@@ -71,16 +71,17 @@ prog:
     }
 
 declaration :
-    VAR a = boption(AUTO) n = ID COLON typevar = ID {
+     v = VAR a = boption(AUTO) n = ID COLON typevar = ID {
         {
             name = n;
             class_type = typevar;
             is_auto = a;
+            is_var = true;
         }
     }                                                                                           
 
 classe : 
-    c = boption(CLASS) o = boption(OBJECT) n = IDCLASS LPAREN lp = list(declaration) s = option(extends) b = option(block) IS bb = block_class
+    c = boption(CLASS) o = boption(OBJECT) n = IDCLASS lp = option(params) s = option(extends) b = option(block) IS bb = block_class
     {
         {
             name_class = n;
@@ -95,14 +96,14 @@ classe :
 
 extends : EXTENDS c = IDCLASS { c }
 
-block : LCBR ld = list(declaration)  instrs = list(instruction)    RCBR {
+block : LCBR instrs = list(instruction) ld = separated_list(SEMICOLON, declaration) RCBR {
     {
-        declarations = ld;
         instructions = instrs;
+        declarations = ld;
     }
 }
 
-block_class : LCBR ld = list(declaration) lm = list(methode) RCBR {
+block_class : LCBR ld = separated_list(SEMICOLON,declaration) lm = separated_list(SEMICOLON,methode) RCBR {
    {  declarations = ld ;
     methodes = lm ;
     }
@@ -110,7 +111,7 @@ block_class : LCBR ld = list(declaration) lm = list(methode) RCBR {
 
         
 methode : 
-    DEF o = boption(OVERRIDE) n = ID LPAREN lp =list(declaration) RPAREN  r = option(returned_type) IS b = block
+    DEF o = boption(OVERRIDE) n = ID LPAREN lp =params RPAREN  r = option(returned_type) IS b = block
     {
         {
             is_override = o;
@@ -120,12 +121,12 @@ methode :
             content_methode = b;
         }
     }
-    | DEF o = boption(OVERRIDE) n = ID LPAREN lp =list(declaration) RPAREN  r = returned_type ASSIGN b = block
+    | DEF o = boption(OVERRIDE) n = ID LPAREN lp =params RPAREN  r = returned_type ASSIGN b = block
     {
         {
             is_override = o;
             name_meth = n;
-            params = lp;
+            params = lp ;
             return_type = Some r;
             content_methode = b;
         }
@@ -139,7 +140,18 @@ ident:
     | THIS { This } 
     | SUPER { Super }
     | RESULT { Result }
+ 
+factoredVarParam:
+    id = ID r = returned_type
+    {
+        {
+            name = id ; class_type = r ;is_auto = false;is_var = false 
+        } 
+    } 
 
+
+params:
+    LPAREN p = separated_list(COMMA, factoredVarParam) RPAREN { p } 
 
 
 expression:    
@@ -173,9 +185,9 @@ expression:
 //     |LPAREN e = expression RPAREN { e }
 
 instruction :
-    n = expression SEMICOLON { Exp(n) } 
+    n = expression SEMICOLON{ Exp(n) } 
  // | ld = list(declaration)  li=list(instruction)  { Block(ld,li) }
-  | n = ident ASSIGN r = expression {Aff(n,r)}
-  | IF si=expression THEN alors = instruction ELSE sinon = instruction {Ite(si,alors,sinon)}
-  | RETURN { Return }
+  | n = ident ASSIGN r = expression SEMICOLON{Aff(n,r)}
+  | IF si=expression THEN alors = instruction ELSE sinon = instruction SEMICOLON {Ite(si,alors,sinon)}
+  | RETURN SEMICOLON { Return }
 

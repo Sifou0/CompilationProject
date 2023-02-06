@@ -1,5 +1,4 @@
 open Ast
-;;
 
 (* Récupère la définition d'une classe depuis une chaine de caractère *)
 let rec getStrOfClass str ld =
@@ -29,7 +28,7 @@ let rec verifExistOfClass str l =
 let rec verifExistOfSuperClass x l =
   match x.superclass with
   | None -> true
-  | Some s -> List.exists (fun x -> x = s) l
+  | Some s -> List.exists (fun x -> x.name_class = s) l
 ;;
 
 
@@ -328,31 +327,31 @@ let handleOptionMeth md l = match md.return_type with | None -> true | Some(a) -
   in inter md.params
 ;;
 
-(* let getTypeOfIdent i cd =
+ let getTypeOfIdent i cd =
   match i with
   | This -> cd.name_class
-  | Super -> match cd.superclass with | Some a -> a | None -> raise(VC_Error "ff")
-  | Local(x) -> x
-  |  *)
+  | Super -> (match cd.superclass with | Some a -> a | None -> raise(VC_Error "ff"))
+  | Result -> "Result"
+  | Local x -> let d = List.find (fun a -> a.name = x) cd.content.declarations in d.class_type
 
 
 
-(* let rec getTypeOfExp e (cn : string) (spn : string) (rt : string) vm = 
+let rec getTypeOfExp e cd = 
   match e with
-  | Ident(ex) -> getTypeOfIdent e cn spn rt vm
+  | Ident(ex) -> getTypeOfIdent ex cd
   | IntCste x-> "Integer"
   | StringCste x-> "String"
   | Cast(s,ex) -> s
   | NewInstance(s,le) -> s
-  | Access(ex,i) -> getTypeOfIdent i cn spn rt vm
-  | Unary(ex) -> getTypeOfExp ex cn spn rt vm
-  | Plus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Minus(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Times(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Div(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Concate(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "String")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | Compo(_,e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-;; *)
+  | Access(ex,i) -> getTypeOfIdent i cd
+  | Unary(ex) -> getTypeOfExp ex cd
+  | Plus(e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "Integer")) then (getTypeOfExp e1 cd) else raise(VC_Error("Expression mal formee"))
+  | Minus(e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "Integer")) then (getTypeOfExp e1 cd)else raise(VC_Error("Expression mal formee"))
+  | Times(e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "Integer")) then (getTypeOfExp e1 cd) else raise(VC_Error("Expression mal formee"))
+  | Div(e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "Integer")) then (getTypeOfExp e1 cd) else raise(VC_Error("Expression mal formee"))
+  | Concate(e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "String")) then (getTypeOfExp e1 cd) else raise(VC_Error("Expression mal formee"))
+  | Compo(_,e1,e2) -> if((getTypeOfExp e1 cd) = (getTypeOfExp e2 cd) && (getTypeOfExp e1 cd = "Integer")) then (getTypeOfExp e1 cd) else raise(VC_Error("Expression mal formee"))
+;; 
 
 let checkVarNotResult b = 
   let rec inter l =
@@ -380,3 +379,26 @@ let rec correctOverride md cd ht =
     match cd.superclass with
     | None -> false
     | Some a -> let sp = (Hashtbl.find ht a) in (List.exists (fun x -> md.name_meth = x.name_meth) sp.content.methodes) || correctOverride md sp ht
+  ;;
+
+let rec checkInstr i ht cd = 
+  match i with
+  | Exp e -> let p = (match Hashtbl.find_opt ht (getTypeOfExp e) with
+    | None -> false
+    | Some a -> true) in if p || getTypeOfExp e cd = "Integer" || getTypeOfExp e cd = "String" then true else false
+  | Aff(i,e) -> getTypeOfExp e cd = getTypeOfIdent i cd
+  | Return -> true
+  | Ite(e,i1,i2) -> getTypeOfExp e cd = "Integer" && checkInstr i1 ht cd && checkInstr i2 ht cd
+
+
+
+let checkBlocPrincipal b cdl ht = if List.for_all (fun i -> List.length(List.filter (fun x -> checkInstr i ht x) cdl) > 0) b.instructions then true else false;;
+
+let checkClass cd cdl = 
+  if isFirstLetterUpper cd.name_class && verifExistOfClass cd.name_class cdl = false && verifExistOfSuperClass cd cdl then true else false
+
+let checkClasses cdl =
+  (* List.for_all (fun x -> checkClass x cdl)  cdl && verifyDoubleNameOfClass cdl  *)
+true
+(* let checkDefClasses cdl = 
+   *)

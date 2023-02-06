@@ -10,7 +10,7 @@ and class_def = {
   name_class : string;
   is_class : bool;
   is_object : bool;
-  params : declaration list;
+  params : declaration list option;
   (* attributs : declaration list; *)
   superclass : string option;
   constructor : block option;
@@ -22,6 +22,7 @@ and declaration = {
   name : string;
   class_type : string;
   is_auto : bool ;
+  is_var : bool;
 }
 
 (* and object_def = {

@@ -33,7 +33,7 @@ let _ =
 
 let lettre = ['A'-'Z' 'a'-'z']
 let Maj = ['A'-'Z']
-let Mij = ['a'-'b']
+let Mij = ['a'-'z']
 let chiffre = ['0'-'9']
 let LC = ( chiffre | lettre )
 
@@ -60,7 +60,7 @@ and read_string buf =
 
    | '\\' '"'  { Buffer.add_char buf '"'; read_string buf lexbuf   }
   | '\\' '\\'  { STR (Buffer.contents buf)  }
-  | '\\' 'f'  { Buffer.add_char buf '\012'; read_string buf lexbuf }
+  
   | '\\' 'n'  { Buffer.add_char buf '\n'; read_string buf lexbuf }
   | '\\' 'r'  { Buffer.add_char buf '\r'; read_string buf lexbuf }
   | '\\' 't'  { Buffer.add_char buf '\t'; read_string buf lexbuf }
@@ -77,9 +77,8 @@ token = parse
                        token lexbuf(*consommer les delimiteurs, renvoyer lexbuf suivant*)
                     } 
  |Maj LC * as id           { IDCLASS id } 
- |Mij LC * as id
+ |lettre LC * as id
     {
-
         try 
             Hashtbl.find keyword_table id
         with Not_found -> ID id    
@@ -99,8 +98,9 @@ token = parse
  | '.'            {DOT}        
  | '}'            {RCBR}
  | ';'            { SEMICOLON }
- | ':'            { COLON }
+ | ":"            { COLON }
  | ":="           { ASSIGN }
+ | ","            { COMMA }
  | "<"		    { RELOP (Ast.Lt) }
  | "<="           { RELOP (Ast.Le) }
  | ">"            { RELOP (Ast.Gt) }

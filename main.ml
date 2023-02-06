@@ -26,14 +26,15 @@ let parse_with_error lexbuf file_in chan =
      *)
 
     let myProg = Parser.prog Lexer.token lexbuf in
+    (* Printer.printAll myProg.classes myProg.block; *)
     (* impression non ambigue de tout l'AST *)
     (* Print.printAll myProg.listClassDecl myProg.bloc; *)
     
     (* analyse contextuelle *)
-    AnalyseContext myProg;
+    AnalyseContext.checkClasses myProg.classes;
 
   with (* traite exception général ... *)
-    ProjetParse.Error -> (* levée par l'analyseur syntaxique *)
+    Parser.Error -> (* levée par l'analyseur syntaxique *)
     Printf.fprintf stderr "Syntax error at position %a\n" print_position lexbuf;
     exit (-1)
   | VC_Error msg ->
