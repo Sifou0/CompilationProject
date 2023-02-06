@@ -73,7 +73,7 @@ and select_end =
 and instruction = 
     Exp of expression (**)
   (* | Block of declaration list * instruction list *)
-  | Aff of ident*expression
+  | Aff of expression*expression
   | Ite of expression*instruction*instruction
   | Return
 

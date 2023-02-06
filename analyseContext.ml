@@ -299,14 +299,7 @@ let checkSuperThisInMain b =
     (
       match x with
         | Exp(e) -> checkExpressionThisSuper e && inter s
-        | Aff(i,e) -> 
-          (
-              match i with
-            | This -> false
-            | Super -> false
-            | Local(_) -> true
-            | Result -> true
-          ) && checkExpressionThisSuper e && inter s
+        | Aff(e1,e) -> checkExpressionThisSuper e && checkExpressionThisSuper e1 && inter s
         | Ite(e,i1,i2) -> checkExpressionThisSuper e
         | Return -> true
     )
@@ -386,7 +379,7 @@ let rec checkInstr i ht cd =
   | Exp e -> let p = (match Hashtbl.find_opt ht (getTypeOfExp e) with
     | None -> false
     | Some a -> true) in if p || getTypeOfExp e cd = "Integer" || getTypeOfExp e cd = "String" then true else false
-  | Aff(i,e) -> getTypeOfExp e cd = getTypeOfIdent i cd
+  | Aff(e1,e) -> getTypeOfExp e cd = getTypeOfExp e1 cd
   | Return -> true
   | Ite(e,i1,i2) -> getTypeOfExp e cd = "Integer" && checkInstr i1 ht cd && checkInstr i2 ht cd
 
