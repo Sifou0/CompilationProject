@@ -117,7 +117,7 @@ methode :
             name_meth = n;
             params = lp;
             return_type = r;
-            content = b;
+            content_methode = b;
         }
     }
     | DEF o = boption(OVERRIDE) n = ID LPAREN lp =list(declaration) RPAREN  r = returned_type ASSIGN b = block
@@ -127,7 +127,7 @@ methode :
             name_meth = n;
             params = lp;
             return_type = Some r;
-            content = b;
+            content_methode = b;
         }
     }
 

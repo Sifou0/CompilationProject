@@ -327,37 +327,40 @@ let checkSuperThisInMain b =
             | Local(_) -> true
             | Result -> true
           ) && checkExpressionThisSuper e && inter s
-        | Ite(e,i1,i2) -> checkExpressionThisSuper e && inter i1 && inter i2
+        | Ite(e,i1,i2) -> checkExpressionThisSuper e
         | Return -> true
     )
   in inter b.instructions
 ;;
 
-let isUpclass c l = List.exists c.superclass l;;
+let isUpclass c l = List.exists (fun x -> x = c.superclass) l;;
 (* Integer et String ne font pas partie de la liste des classes autorisees donc pas besoin de verif dessus *)
 
+let handleOptionMeth md l = match md.return_type with | None -> true | Some(a) -> List.exists (fun x -> x = a) l
+
  let checkMethode md l = 
-  (List.exists md.return_type l || md.return_type = "Integer" || md.return_type = "String") &&
+  (handleOptionMeth md l || md.return_type = Some "Integer" || md.return_type = Some "String") &&
   let rec inter lp = 
     match lp with
     | [] -> true
-    | x::s -> List.exists x.class_type l && inter s
+    | x::s -> List.exists (fun n -> n = x.class_type) l && inter s
   in inter md.params
 ;;
 
-let getTypeOfIdent i (cn : string) (spn : string) (rt : string) (vm : (string, string) t) : string =
+(* let getTypeOfIdent i cd =
   match i with
-  | This -> cn
-  | Super -> spn
-  | Local(s) -> try(Hashtbl.find vm s) with Not_found -> raise (VC_Error ("La variable " ^ s ^ " n'existe pas."))
-  | Result -> rt
+  | This -> cd.name_class
+  | Super -> match cd.superclass with | Some a -> a | None -> raise(VC_Error "ff")
+  | Local(x) -> x
+  |  *)
 
 
-let getTypeOfExp e (cn : string) (spn : string) (rt : string) (vm : (string, string) t) = 
+
+(* let rec getTypeOfExp e (cn : string) (spn : string) (rt : string) vm = 
   match e with
-  | Ident -> getTypeOfIdent e cn spn rt vm
-  | IntCste -> "Integer"
-  | StringCste -> "String"
+  | Ident(ex) -> getTypeOfIdent e cn spn rt vm
+  | IntCste x-> "Integer"
+  | StringCste x-> "String"
   | Cast(s,ex) -> s
   | NewInstance(s,le) -> s
   | Access(ex,i) -> getTypeOfIdent i cn spn rt vm
@@ -368,8 +371,7 @@ let getTypeOfExp e (cn : string) (spn : string) (rt : string) (vm : (string, str
   | Div(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
   | Concate(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "String")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
   | Compo(_,e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm) && (getTypeOfExp e1 cn spn rt vm = "Integer")) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-  | CallElement(e1,e2) -> if((getTypeOfExp e1 cn spn rt vm) = (getTypeOfExp e2 cn spn rt vm)) then (getTypeOfExp e1 cn spn rt vm) else raise VC_Error("Expression mal formee")
-;;
+;; *)
 
 let checkVarNotResult b = 
   let rec inter l =
@@ -383,19 +385,17 @@ let cycleHeritage c ht =
   let rec inter cd acc =
     match cd.superclass with
     | None -> true
-    | Some a -> if List.find a acc then false else inter (Hashtbl.find ht a) a::acc
+    | Some a -> if List.exists (fun x -> x = a) acc then false else inter (Hashtbl.find ht a) (acc@[a])
   in inter c []
 
 let checkMethInClass m cd =
   let rec inter l = match l with
   | [] -> false
-  | x::s -> if x.name_meth = m then true else inter m s
+  | x::s -> if x.name_meth = m then true else inter s
 in inter cd.content.methodes
-;;
 
-let correctOverride m cd ht =
-  let rec inter mn s =
-    match s with
+let rec correctOverride md cd ht =
+  if md.is_override then true else
+    match cd.superclass with
     | None -> false
-    | Some a -> checkMethInClass m (Hashtbl.find ht a) || inter m (Hashtbl.find ht a)
-  in inter m cd.name_class;;
+    | Some a -> let sp = (Hashtbl.find ht a) in (List.exists (fun x -> md.name_meth = x.name_meth) sp.content.methodes) || correctOverride md sp ht

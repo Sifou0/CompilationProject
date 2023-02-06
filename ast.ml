@@ -45,7 +45,7 @@ and method_def = {
   name_meth : string;
   params : declaration list;
   return_type : string option;
-  content : block;
+  content_methode : block;
   is_override : bool;
 }
 

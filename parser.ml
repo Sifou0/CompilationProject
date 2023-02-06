@@ -769,7 +769,7 @@ and _menhir_goto_list_instruction_ : _menhir_env -> 'ttv_tail -> _menhir_state -
             name_meth = n;
             params = lp;
             return_type = Some r;
-            content = b;
+            content_methode = b;
         }
     )
 # 776 "parser.ml"
@@ -803,7 +803,7 @@ and _menhir_goto_list_instruction_ : _menhir_env -> 'ttv_tail -> _menhir_state -
             name_meth = n;
             params = lp;
             return_type = r;
-            content = b;
+            content_methode = b;
         }
     )
 # 810 "parser.ml"
