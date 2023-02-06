@@ -15,52 +15,25 @@ let parse_with_error lexbuf file_in chan =
   try
     (* lance l'analyse syntaxique (qui appellera l'analyse lexicale) en
      * executant au fur et à mesure les actions associées aux productions.
-     * L'appel est fait par parser.prog (où prog est le non-terminal déclaré
-     * comme axiome dans parser.mly). 
+     * L'appel est fait par ProjetParse.prog (où prog est le non-terminal déclaré
+     * comme axiome dans projetParse.mly). 
      * La valeur retournée par la production qui définit l'axiome renvoie un
      * couple forme par la représentation de la partie déclarations ainsi que
      * la représentation de l'expression comprise entre le begin et le end.
      * Cette structure correspond au type progType défini dans ast.ml.
-     * Ci-dessous ld contient donc une liste de paires dont chacunz représente
+     * Ci-dessous ld contient donc une liste de records dont chacun représente
      * une déclaration et l'ast de l'expression comprise entre begin et end
      *)
-     let prog = Parser.prog Lexer.token lexbuf
-      in 
-      (* AnanlyseContext.analyseProgram prog;  *)
 
-    (* Dans ce TP d'initiation on réalise à la fois l'impression des AST,
-     * les vérifications contextuelles, une version sous forme d'interprète
-     * et une version sous forme d'un compilateur pour la machine virtuelle
-     * utilisee pour le projet.
-     * Dans la vraie vie, on ferait soit un interprete, soit un générateur de
-     * code !
-     *)
-
-    Print.printAll ld e; (* impression non ambigue de tout l'AST *)
-
-    (* Verifications Contextuelles: elles sont incluses dans le fichier eval.ml
-     * Lance l'exception VC_Error en cas d'erreur. En ce cas ni la partie
-     * interprétation, ni la partie compilation ne sera lancée et on se
-     * retrouvera directement dans le traite-exception ci-dessous.
-     *)
-    Eval.vc ld e; 
-
-    (* partie interprete: on procede à l'évaluation des déclarations ainsi
-     * qu'à celle de l'expression entre le begin et le end
-     * Lance l'exception RUN_error en cas d'erreur à l'exécution
-     *)
-    let res = Eval.eval ld e in
-    print_string "Evaluation finale: ";  print_int res; print_newline ();
+    let myProg = Parser.prog Lexer.token lexbuf in
+    (* impression non ambigue de tout l'AST *)
+    (* Print.printAll myProg.listClassDecl myProg.bloc; *)
     
-    (* partie compilation: on engendre du code pour la machine abstraite.
-     * Le parametre chan correspond au canal de sortie dans lequel on
-     * ecrit les instructions produites. Dans le code ci-dessous cela
-     * correspond par defaut au fichier out.txt.
-     *)
-    Compil.compile ld e chan;
-    
+    (* analyse contextuelle *)
+    AnalyseContext myProg;
+
   with (* traite exception général ... *)
-    parser->(* levée par l'analyseur syntaxique *)
+    ProjetParse.Error -> (* levée par l'analyseur syntaxique *)
     Printf.fprintf stderr "Syntax error at position %a\n" print_position lexbuf;
     exit (-1)
   | VC_Error msg ->

@@ -1,5 +1,5 @@
 INTERFACES = parser.mli
-SOURCES    = ast.ml parser.ml lexer.ml main.ml analyseContext.ml
+SOURCES    = ast.ml parser.ml lexer.ml printer.ml analyseContext.ml main.ml
 GENERATED  =  lexer.ml parser.ml parser.mli parser.automaton parser.conflicts
 
 tp: parser.mli $(SOURCES)
