@@ -29,7 +29,7 @@ let rec verifExistOfClass str l =
 let rec verifExistOfSuperClass x l =
   match x.superclass with
   | None -> true
-  | Some s -> verifExistOfSuperClass s l
+  | Some s -> List.exists (fun x -> x = s) l
 ;;
 
 
@@ -37,7 +37,7 @@ let verifyInHeritance l =
   List.fold_left (
     fun acc x -> acc && (
       if (verifExistOfSuperClass x l) then true
-      else raise (VC_Error ("La super classe de \"" ^ x.name_class ^ "\" n'est pas définie.")) )) true l
+      else raise (VC_Error ("La super classe de \"" ^ x.name_class ^ "\" n'est pas définie.")) ))
 ;;
 
 let rec countNameClass str l =
@@ -73,13 +73,13 @@ let rec verifyExistanceOfExpKey str e =
   | NewInstance(s,le) -> (String.equal str s) || (List.fold_left (fun acc x -> acc && (verifyExistanceOfExpKey str x)) false le)
   | Concate(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
   | Access(e,i) -> verifyExistanceOfExpKey str e
-  | CallElement(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d)
+  (* | CallElement(g,d) -> (verifyExistanceOfExpKey str g) || (verifyExistanceOfExpKey str d) *)
   | Unary _ -> false
 
   let rec verifyExistanceOfInstrKey str i =
     match i with
     | Exp e -> verifyExistanceOfExpKey str e;
-    | Aff(e1,e2) -> (verifyExistanceOfExpKey str e1) || ( verifyExistanceOfExpKey str e2)
+    | Aff(e1,e2) ->  verifyExistanceOfExpKey str e2
 
     | Ite(si, sinon, alors) -> (verifyExistanceOfExpKey str si) || (verifyExistanceOfInstrKey str alors) || (verifyExistanceOfInstrKey str sinon)
     | Return -> false
@@ -106,29 +106,19 @@ let rec getMethodesRedefind d ld =
 
 (* retourne la liste des méthodes déclaré comme étant override *)
 let getOverrideMethods c =
-  let rec extractOverride ld =
-    match ld with
-    | [] -> []
-    | (MethodDecl m)::s -> if (m.is_override) then m::(extractOverride s) else extractOverride s
-    | _::s -> extractOverride s
-  in extractOverride c.block_class
+  List.find_all (fun x -> x.is_override = true) c.content.methodes
 ;;
 
-(* Compare si deux listes de declaration sont équivalentes *)
-let rec compareDecls ld1 ld2 =
-  match ld1 with
-  | [] ->
-    begin
-      match ld2 with
-      | [] -> true
-      | _ -> false
-    end
-  | d1::s1 ->
-    begin
-      match ld2 with
-      | [] -> false
-      | d2::s2 -> if ((List.length d1.lhs) == (List.length d2.lhs) && (String.equal d1.rhs d2.rhs)) then compareDecls s1 s2 else false
-    end
+(* Compare si deux listes de paramètres sont équivalentes *)
+let compareLenParam lp1 lp2 = 
+  if List.length lp1 = List.length lp2 then 
+  let rec types l1 l2 = match l1 with
+  | [] -> true
+  | x::s -> match l2 with
+    | [] -> true
+    | y::t -> x.class_type = y.class_type && types s t
+in types lp1 lp2
+else false
 ;;
 
 (* vérifie si la signature de la méthode "m" fait partie de la liste des methodes "lm" *)
@@ -138,7 +128,7 @@ let rec verifyExistanceMeth m lm =
   | meth::l -> if (
   (String.equal meth.name_meth m.name_meth) && 
   (String.equal (getOptString meth.return_type) (getOptString m.return_type)) && 
-  (compareDecls meth.params m.args)) then true else  verifyExistanceMeth m l
+  (compareLenParam meth.params m.params)) then true else  verifyExistanceMeth m l
 ;;
 
 (* vérifie que les méthodes définie comme "override" sont bien en train d'override une méthode parent *)
@@ -178,33 +168,24 @@ let verifyHeritage ld =
 ;;
 
 (* verifie la présence et l'unicité des constructeurs *)
-let rec verifyYesConstructor ld =
+(* let rec verifyYesConstructor ld =
   match ld with
   | [] -> true
-  | c::s -> let nbConstructor = List.fold_left (fun acc x -> match x with | Constructor _  -> acc+1 | _ -> acc) 0 c.classBody
+  | c::s -> let nbConstructor = List.fold_left (fun acc x -> match x with |  constructor -> acc+1 | _ -> acc) 0 c.
     in if (nbConstructor == 0) then
-      raise (VC_Error ("La classe \"" ^ c.className ^ "\" n'a pas de constructeur."))
+      raise (VC_Error ("La classe \"" ^ c.name_class ^ "\" n'a pas de constructeur."))
     else if (nbConstructor > 1) then
-      raise (VC_Error ("La classe \"" ^ c.className ^ "\" a plusieurs constructeurs."))
+      raise (VC_Error ("La classe \"" ^ c.name_class ^ "\" a plusieurs constructeurs."))
     else
       verifyYesConstructor s
-;;
+;; *)
 
 (* let getConstrFromClass c =
   c.constructor
 ;; *)
 
 
-(* Compare si deux listes de paramètres sont équivalentes *)
-let compareLenParam lp1 lp2 = 
-  if List.length lp1 = List.length lp2 then 
-  let rec types l1 l2 = match l1 with
-  | [] -> true
-  | x::s -> match l2 with
-    | y::t -> x.class_type = y.class_type && types s t
-in types lp1 lp2
-else false
-;;
+
 
 (* let rec compareLenParam lp1 lp2 =
   match lp1 with
